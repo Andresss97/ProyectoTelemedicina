@@ -1,50 +1,34 @@
 package pojos;
 import java.io.*;
 import java.sql.Date;
-import javax.persistence.*;
+
 
 //*CLASE NO ACABADA endate y startdate salen en las tables
 
-@Entity
-@Table(name = "TREATMENT")
 public class Treatment implements Serializable{
 	
-	@Id
-	@GeneratedValue(generator = "TREATMENT")
-	@TableGenerator(name = "TREATMENT", table = "sqlite_sequence",
-		pkColumnName = "name", valueColumnName = "seq", pkColumnValue = "TREATMENT")
 	private Integer ID;
 	
-	@Column(name = "start")
 	private Date startDate;
-	@Column(name = "end")
+
 	private Date endDate;
 	
-	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "IDPATIENT")
 	private Patient patient;
-	
-	
-	//*Falta anotar en xml las que estan comentadas
 	
 	public enum typeTreatment {
 		MEDICATION, REHAB, OTHER
 	};
 	
-	@Column(name = "TYPE")
 	private typeTreatment treatment;
-	
-	@OneToOne(fetch = FetchType.LAZY, mappedBy="treatment")
+
 	private Illness illness; 
 	
 	private String description;
 	
 	private String tResults;
-	
-	@OneToOne (fetch = FetchType.LAZY, mappedBy = "treatment")
+
 	private Allergies allergy;
-	
-	@OneToOne (fetch = FetchType.LAZY, mappedBy = "treatment")
+
 	private Surgeries surgery;
 
 	public Treatment() {

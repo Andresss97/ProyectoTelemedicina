@@ -41,6 +41,7 @@ public abstract class DBCreation {
 				qi.insertSpecialities(specialities.get(i));
 			}
 		} catch (SQLException e) {
+			System.out.println("Llego aqui");
 			e.printStackTrace();
 		}
 		}

@@ -1,27 +1,15 @@
 package pojos;
 import java.io.*;
 import java.sql.Date;
-import javax.persistence.*;
 
-
-@Entity
-@Table (name = "SURGERIES")
 public class Surgeries implements Serializable {
-	
-	@Id
-	@GeneratedValue(generator = "SURGERIES")
-	@TableGenerator(name = "SURGERIES", table = "sqlite_sequence",
-		pkColumnName = "name", valueColumnName = "seq", pkColumnValue = "SURGERIES")
+
 	private Integer ID;
 	private Date date;
 	private String type;
-	
-	@OneToOne (fetch = FetchType.LAZY)
-	@JoinColumn (name = "IDTREATMENT")
+
 	private Treatment treatment;
-	
-	@ManyToOne (fetch = FetchType.LAZY, cascade = CascadeType.PERSIST)
-	@JoinColumn (name = "IDPATIENT")
+
 	private Patient patient;
 	
 	public Surgeries() {

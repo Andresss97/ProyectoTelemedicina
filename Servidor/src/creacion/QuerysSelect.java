@@ -12,7 +12,7 @@ import java.util.List;
 import javax.persistence.Persistence;
 import javax.persistence.Query;*/
 
-import Interfaz.MenuPrincipal;
+import Interfaz.MenuPrincipalServidor;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import pojos.Address;
@@ -28,7 +28,7 @@ import pojos.Treatment;
 import pojos.Treatment.typeTreatment;
 
 public class QuerysSelect {
-	private Conector conn = (Conector) MenuPrincipal.conector;
+	private Conector conn = (Conector) MenuPrincipalServidor.conector;
 	
 	public String[] selectUser(String user, String psw) throws SQLException {
 		String[] data = new String[2];

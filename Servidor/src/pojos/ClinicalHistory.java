@@ -2,18 +2,8 @@ package pojos;
 import java.io.*;
 import java.sql.Date;
 
-import javax.persistence.*;
-
-
-
-@Entity
-@Table(name = "CLINICALHISTORY")
 public class ClinicalHistory implements Serializable {
-	
-	@Id
-	@GeneratedValue (generator = "CLINICALHISTORY")
-	@TableGenerator (name = "CLINICALHISTORY", table = "sqlite_sequence", 
-	pkColumnName = "name", valueColumnName = "seq", pkColumnValue = "CLINICALHISTORY")
+
 	private Integer ID;
 	
 	public enum ADDICTIONS {
@@ -25,9 +15,7 @@ public class ClinicalHistory implements Serializable {
 	private ADDICTIONS addictionsDrugs;
 	
 	private ADDICTIONS addictionsOthers;
-	
-	@OneToOne(cascade = CascadeType.PERSIST)
-	@JoinColumn(name = "IDPATIENT")
+
 	private Patient patient;
 	
 	public enum BLOODGROUP {
@@ -35,8 +23,7 @@ public class ClinicalHistory implements Serializable {
 	};
 
 	private BLOODGROUP bloodgroup;
-	
-	@Column(name = "insurancecompany")
+
 	private String medicalInsurance;
 
 	public ClinicalHistory() {

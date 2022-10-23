@@ -4,7 +4,7 @@ package creacion;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 
-import Interfaz.MenuPrincipal;
+import Interfaz.MenuPrincipalServidor;
 import pojos.*;
 
 public class QuerysDelete {
@@ -12,7 +12,7 @@ public class QuerysDelete {
 	private Conector con;
 	
 	public QuerysDelete() {
-		this.con = (Conector) MenuPrincipal.conector;
+		this.con = (Conector) MenuPrincipalServidor.conector;
 	}	
 
 	public void deleteAppointment (Appointment appointment) throws SQLException {

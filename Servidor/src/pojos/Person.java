@@ -3,13 +3,9 @@ package pojos;
 import java.io.Serializable;
 import java.sql.Date;
 import java.util.Arrays;
-import javax.persistence.*;
 
 import javafx.scene.image.Image;
 
-
-@Entity
-@Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
 public abstract class Person implements Serializable {
 
 	protected String username;
@@ -23,11 +19,8 @@ public abstract class Person implements Serializable {
 	protected String gender;
 	protected byte[] photo;
 	
-	@OneToOne (fetch = FetchType.LAZY)
-	@JoinColumn (name = "IDADDRESS")
 	protected Address address;
-	
-	@Id
+
 	protected Integer ID;
 
 	@SuppressWarnings("deprecation")

@@ -8,14 +8,14 @@ import java.util.ArrayList;
 
 import javax.sql.rowset.serial.SerialBlob;
 
-import Interfaz.MenuPrincipal;
+import Interfaz.MenuPrincipalServidor;
 //import pojos.Treatment.typeTreatment;
 import pojos.*;
 import pojos.ClinicalHistory.BLOODGROUP;
 
 public class QuerysInsert {
 	
-	private Conector conn = (Conector) MenuPrincipal.conector;
+	private Conector conn = (Conector) MenuPrincipalServidor.conector;
 	//change the Integer you are changing
 	
 	public void insertDoctor(Doctor doctor) throws SQLException {

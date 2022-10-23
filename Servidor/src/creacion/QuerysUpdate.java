@@ -5,11 +5,11 @@ import pojos.*;
 
 import java.sql.SQLException;
 
-import Interfaz.MenuPrincipal;
+import Interfaz.MenuPrincipalServidor;
 
 public class QuerysUpdate {
 
-	private Conector conn = (Conector) MenuPrincipal.conector;	
+	private Conector conn = (Conector) MenuPrincipalServidor.conector;	
 	
 	public void addressDoctorAssigment(Address address, Doctor doctor) throws SQLException {
 		String query;
@@ -45,7 +45,7 @@ public class QuerysUpdate {
 		st.setString(3, appointment.getReason());
 		st.setBoolean(4, appointment.isDone());
 		st.setInt(5, appointment.getDoctor().getID());
-		st.setInt(6, MenuPrincipal.patient.getID());
+		st.setInt(6, MenuPrincipalServidor.patient.getID());
 		st.setInt(7, appointment.getID());
 		
 	    st.executeUpdate();

@@ -5,51 +5,30 @@ import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 
-import javax.persistence.*;
-
-@Entity
-@Table(name = "PATIENT")
 public class Patient extends Person {
 	
-	@Id
-	@GeneratedValue(generator = "PATIENT")
-	@TableGenerator(name = "PATIENT", table = "sqlite_sequence",
-		pkColumnName = "name", valueColumnName = "seq", pkColumnValue = "PATIENT")
 	private Integer ID;
 
 	private float weight;
 	
 	private float height;
 	
-	@Column(name = "homephone")
 	private int housePhone;
 	
-	@ManyToMany
-	@JoinTable(name="MAPPING",
-			joinColumns={@JoinColumn(name="IDDOCTOR", referencedColumnName="id")},
-			inverseJoinColumns={@JoinColumn(name="IDPATIENT", referencedColumnName="id")})
 	private LinkedList<Doctor> doctors;
-	
-	@OneToMany(mappedBy="patient")
+
 	private LinkedList<Appointment> appointments;
-	
-	@OneToMany(mappedBy="patient", cascade = CascadeType.PERSIST)
+
 	private LinkedList<Illness> illnesses;
-	
-	
-	@OneToMany(mappedBy="patient")
+
 	private LinkedList<Allergies> allergies;
-	
-	@OneToMany(mappedBy="patient")
+
 	private LinkedList<Surgeries> surgeries;
-	
-	@OneToMany(mappedBy="patient", cascade = CascadeType.PERSIST)
+
 	private LinkedList<Treatment> treatment;
-	
-	@OneToMany(mappedBy="patient")
+
 	private LinkedList<Vaccine> vaccines;
-	
-	@OneToOne(mappedBy="patient", cascade = CascadeType.PERSIST)
+
 	private ClinicalHistory cHistory;
 	
 	public Patient() { 

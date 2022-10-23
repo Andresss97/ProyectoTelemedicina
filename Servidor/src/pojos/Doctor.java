@@ -3,23 +3,15 @@ import java.io.*;
 import java.sql.Date;
 import java.util.ArrayList;
 import java.util.LinkedList;
-import javax.persistence.*;
 
 import javafx.collections.ObservableList;
 
-
-@Entity
-@Table(name = "DOCTOR")
 public class Doctor extends Person  {
 
-	@Id
-	@GeneratedValue(generator = "DOCTOR")
 	private Integer ID;
 
-	@Column(name = "idspeciality")
 	private String speciality;
-	
-	@ManyToMany(mappedBy="doctors")
+
 	private LinkedList<Patient>patients;
 	
 	public Doctor() {

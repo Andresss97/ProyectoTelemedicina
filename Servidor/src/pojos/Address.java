@@ -1,13 +1,8 @@
 package pojos;
 import java.io.*;
-import javax.persistence.*;
 
-
-@Entity
-@Table (name = "ADDRESS")
 public class Address implements Serializable {
 	
-	@Column(name = "cp")
 	private int postalCode;
 	
 	private String city;
@@ -16,14 +11,8 @@ public class Address implements Serializable {
 	
 	private int houseNumber;
 	
-	
-	@Id
-	@GeneratedValue (generator = "ADDRESS")
-	@TableGenerator (name = "ADDRESS", table = "sqlite_sequence", 
-	pkColumnName = "name", valueColumnName = "seq", pkColumnValue = "ADDRESS")
 	private Integer ID;
 
-	@OneToOne (fetch = FetchType.LAZY, mappedBy = "address")
 	private Person person;
 	
 	public Address() {
