@@ -192,4 +192,18 @@ public class QuerysInsert {
 		st.executeUpdate();
 		st.close();
 	}
+	
+	public void insertAdmin(Administrator admin) throws SQLException {
+		String query;
+		
+		query = "INSERT into administrator (username, password) values (?,?)";
+		
+		PreparedStatement st = conn.getConnect().prepareStatement(query);
+		
+		st.setString(1, admin.getUsername());
+		st.setString(2, admin.getPassword());
+		
+		st.executeUpdate();
+		st.close();
+	}
 }

@@ -35,6 +35,7 @@ public abstract class DBCreation {
 		cTClinicalHistory(con);
 		cTMappingLogIn(con);
 		cTSpeciality(con);
+		cTAdministrator(con);
 		try {
 			qi.insertUser2("admin", "indi");
 			for(int i = 0; i < specialities.size(); i++) {
@@ -331,6 +332,23 @@ public abstract class DBCreation {
 		}
 	}
 	
+	private static void cTAdministrator(Conector conn) {
+		Conector con = conn;
+		Statement st = null;
+		String in = null;
+		
+		try {
+			st = con.getConnect().createStatement();
+			in = "CREATE TABLE ADMINISTRATOR" + "(ID integer PRIMARY KEY AUTOINCREMENT NOT NULL,"
+					+ "USERNAME varchar(50) UNIQUE NOT NULL, PASSWORD varchar(50) NOT NULL)";
+			st.execute(in);
+			st.close();
+		}
+		catch(Exception ex) {
+			System.out.println(ex.getMessage());
+		}
+	}
+	
 	private static void fillSpecialities() {
 		specialities = new ArrayList<>();
 		specialities.add("Allergy and Immunollogy");
@@ -353,4 +371,5 @@ public abstract class DBCreation {
 		specialities.add("General Surgery");
 		specialities.add("Urology");
 	}
+
 }
