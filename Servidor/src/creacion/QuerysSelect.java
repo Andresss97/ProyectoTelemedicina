@@ -686,40 +686,4 @@ public class QuerysSelect {
 		
 		return id2;
 	}
-	
-	public Administrator selectAdmin() throws SQLException {
-		Administrator admin = new Administrator();
-		
-		String query = "SELECT * from administrator";
-		PreparedStatement st = conn.getConnect().prepareStatement(query);
-		
-		ResultSet set = st.executeQuery();
-		
-		admin.setUsername(set.getString("username"));
-		admin.setPassword(set.getString("password"));
-		
-		return admin;
-	}
-	
-	public boolean selectAdminLogIn(Administrator admin) throws SQLException {
-		Administrator admin2 = new Administrator();
-		
-		String query = "SELECT * from administrator where username = ? and password = ?";
-		PreparedStatement st = conn.getConnect().prepareStatement(query);
-		
-		st.setString(1,admin.getUsername());
-		st.setString(2, admin.getPassword());
-		
-		ResultSet set = st.executeQuery();
-		
-		admin2.setUsername(set.getString("username"));
-		admin2.setPassword(set.getString("password"));
-		
-		if(admin2.getUsername().equals(admin.getUsername()) && admin2.getPassword().equals(admin.getPassword())) {
-			return true;
-		}
-		else {
-			return false;
-		}
-	}
 }

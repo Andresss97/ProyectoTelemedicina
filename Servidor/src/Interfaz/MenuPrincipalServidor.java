@@ -1,6 +1,7 @@
 package Interfaz;
 
 import java.io.File;
+import java.io.IOException;
 import java.sql.SQLException;
 
 import creacion.Conector;
@@ -14,9 +15,11 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Hyperlink;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
@@ -79,28 +82,28 @@ public class MenuPrincipalServidor extends Application{
 	
 	@FXML
 	public void accionIngresar(ActionEvent event) {
-		String username;
-		String password;
-		
-		username = this.usuario.getSelectedText();
-		password = this.contrasenha.getSelectedText();
-		
-		Administrator admin = new Administrator();
-		admin.setUsername(username);
-		admin.setPassword(password);
-		
 		QuerysSelect qs = new QuerysSelect();
 		
 		try {
-			boolean comprobar = qs.selectAdminLogIn(admin);
-			
-			if(comprobar == true) {
+			String[] data = qs.selectUser(this.usuario.getText(), this.contrasenha.getText());
+			if(data[0].equals(this.usuario.getText()) && data[1].equals(this.contrasenha.getText())) {
+				BorderPane root = FXMLLoader.load(getClass().getResource("VisionAdministrador.fxml"));
+				contenedor.getChildren().clear();
 				
+				root.prefHeightProperty().bind(contenedor.heightProperty());
+				root.prefWidthProperty().bind(contenedor.widthProperty());
+				
+				contenedor.setCenter(root);
 			}
 			else {
-				
+		    	Alert alert = new Alert(AlertType.ERROR);
+				alert.setContentText("Please introduce your username.");
+				alert.setHeaderText("Recovery");
+				alert.setTitle("Information");
+				alert.showAndWait();
 			}
-		} catch (SQLException e) {
+			
+		} catch (SQLException | IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
@@ -109,16 +112,14 @@ public class MenuPrincipalServidor extends Application{
 
     @FXML
     void accionRegistrarse(ActionEvent event) {
-    	QuerysInsert qi = new QuerysInsert();
     	QuerysSelect qs = new QuerysSelect();
-    	
-    	this.admin = new Administrator();
-    	try {
-			qi.insertAdmin(admin);
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+    	Alert alert = new Alert(AlertType.ERROR);
+		alert.setContentText("Please introduce your username.");
+		alert.setHeaderText("Recovery");
+		alert.setTitle("Information");
+		alert.showAndWait();
+		
+    	return;
     }
 	
 }
