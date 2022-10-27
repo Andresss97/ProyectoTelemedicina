@@ -130,7 +130,7 @@ public class SQLiteManager implements DBManager
 					+ "(PATID			INTEGER REFERENCES patient(ID),"
 					+ " DOCID			INTEGER REFERENCES doctor(ID) ON DELETE CASCADE)";
 			st4.executeUpdate(sq4);
-			st4.close();
+			st4.close();  
 		}
 		catch (SQLException e)
 		{
