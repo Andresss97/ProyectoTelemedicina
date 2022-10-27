@@ -10,10 +10,9 @@
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.RowConstraints?>
 
-
 <BorderPane fx:id="contenedor" style="-fx-background-color: white;" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Interfaz.MenuPrincipalServidor">
    <center>
-      <BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" style="-fx-background-color: white;" BorderPane.alignment="CENTER">
+      <BorderPane style="-fx-background-color: white;" BorderPane.alignment="CENTER">
          <center>
             <GridPane BorderPane.alignment="CENTER">
               <columnConstraints>
@@ -34,12 +33,12 @@
                   <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
               </rowConstraints>
                <children>
-                  <Label text="Usuario:" GridPane.columnIndex="2" GridPane.rowIndex="2" />
+                  <Label text="User:" GridPane.columnIndex="2" GridPane.rowIndex="2" />
                   <TextField fx:id="usuario" GridPane.columnIndex="3" GridPane.rowIndex="2" />
-                  <Label text="Contraseña:" GridPane.columnIndex="2" GridPane.rowIndex="3" />
-                  <Button alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#accionIngresar" prefHeight="25.0" prefWidth="72.0" text="Ingresar" textAlignment="CENTER" GridPane.columnIndex="3" GridPane.rowIndex="5" />
+                  <Label text="Password:" GridPane.columnIndex="2" GridPane.rowIndex="3" />
+                  <Button alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#accionIngresar" prefHeight="25.0" prefWidth="72.0" text="Log In" textAlignment="CENTER" GridPane.columnIndex="3" GridPane.rowIndex="5" />
                   <PasswordField fx:id="contrasenha" GridPane.columnIndex="3" GridPane.rowIndex="3" />
-                  <Hyperlink fx:id="registrarse" onAction="#accionRegistrarse" text="No tengo cuenta" GridPane.columnIndex="3" GridPane.rowIndex="4" />
+                  <Hyperlink fx:id="registrarse" onAction="#accionRegistrarse" text="Password recovery?" GridPane.columnIndex="3" GridPane.rowIndex="4" />
                </children>
             </GridPane>
          </center>
