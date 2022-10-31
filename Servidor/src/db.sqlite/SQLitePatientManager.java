@@ -39,10 +39,8 @@ public class SQLitePatientManager implements PatientManager
 				Date DOB=rs.getDate("DOB");
 				Integer phone = rs.getInt("Phone");
 				String email=rs.getString("Email");
-				String sportType=rs.getString("SportType");
-				String disability=rs.getString("Disability");
 
-				Patient pat = new Patient(id,name,address,DOB,phone,email,sportType,disability);
+				Patient pat = new Patient(id,name,address,DOB,phone,email);
 				p.add(pat);
 			}
 			prep.close();
@@ -75,11 +73,11 @@ public class SQLitePatientManager implements PatientManager
 	}
 
 	@Override
-	public void addPatientandMedicalHistory (Patient p,PhysicalTherapist pt,MedicalHistory mh)
+	public void addPatientandMedicalHistory (Patient p,MedicalHistory mh)
 	{
 		try
 		{
-			String sqlMedicalHistory="INSERT INTO medicalHistory (Name,DOB,Diseases,Allergies,Surgeries,WeightKg,HeightCm)"
+			String sqlMedicalHistory="INSERT INTO medicalHistory (Name,DOB,Diseases,Allergies,Surgeries,WeightKg,HeightCm,ECG,EMG)"
 					+  "VALUES (?,?,?,?,?,?,?)";
 			PreparedStatement ps=c.prepareStatement(sqlMedicalHistory);
 			ps.setString(1,mh.getName());
@@ -89,22 +87,20 @@ public class SQLitePatientManager implements PatientManager
 			ps.setString(5, mh.getSurgeries());
 			ps.setFloat(6,mh.getWeightKg());
 			ps.setInt(7,mh.getHeightCm());
+			//TODO añadir el EMG y el ECG
 			ps.executeUpdate();
 			ps.close();
 
 			int mhid=getLastId();
-			String sqlpatient="INSERT INTO patient (Name, Address, DOB, Phone, Email, SportType,Disability,MHID,PTID)"
-					+  "VALUES (?,?,?,?,?,?,?,?,?)";
+			String sqlpatient="INSERT INTO patient (Name, Address, DOB, Phone, Email,MHID)"
+					+  "VALUES (?,?,?,?,?,?)";
 			PreparedStatement prep=c.prepareStatement(sqlpatient);
 			prep.setString(1,p.getName());
 			prep.setString(2,p.getAddress());
 			prep.setDate(3,p.getDob());
 			prep.setInt(4, p.getPhoneNumber());
-			prep.setString(5, p.geteMail());
-			prep.setString(6, p.getSport());
-			prep.setString(7, p.getDisability());
-			prep.setInt(8, mhid);
-			prep.setInt(9,pt.getId());
+			prep.setString(5, p.geteMail());			
+			prep.setInt(6, mhid);
 			prep.executeUpdate();
 			prep.close();
 		}
@@ -114,36 +110,10 @@ public class SQLitePatientManager implements PatientManager
 		}
 	}
 
-	@Override
-	public List<Treatment> listTreatment(Patient patient)
-	{
-		List<Treatment> treatments=new ArrayList <Treatment>();
-		try
-		{
-			String sql="SELECT * FROM treatment AS t JOIN PatientTreatment AS pt ON t.ID=pt.TREATID JOIN patient AS p ON p.ID=pt.PATID "
-					+ "WHERE PATID=?";
-			PreparedStatement p=c.prepareStatement(sql);
-			p.setInt(1, patient.getId());
-			ResultSet rs=p.executeQuery();
-			while(rs.next())
-			{
-				Integer id=rs.getInt(1);
-				String type=rs.getString(2);
-				Integer length=rs.getInt(3);
-				treatments.add(new Treatment(id,type,length));
-			}
-			p.close();
-
-		}
-		catch(SQLException e)
-		{
-			e.printStackTrace();
-		}
-		return treatments;
-	}
+	
 
 	@Override
-	public Patient getPatient(Integer id) //returns the patient and his physicalTherapist(id,name,email and sport)
+	public Patient getPatient(Integer id) //returns the patient 
 	{
 		Patient patient =null;
 		try
@@ -164,26 +134,6 @@ public class SQLitePatientManager implements PatientManager
 					Date DOB=rs.getDate("DOB");
 					Integer phone=rs.getInt("Phone");
 					String email=rs.getString("Email");
-					String sportType=rs.getString("SportType");
-					String disability=rs.getString("Disability");
-					ptid=rs.getInt("PTID");
-					String sql2="SELECT ID,Name,Email,SportType FROM physicalTherapist WHERE ID=?";
-					PreparedStatement ps2=c.prepareStatement(sql2);
-					ps2.setInt(1, ptid);
-					ResultSet rs2=ps2.executeQuery();
-					PhysicalTherapist physicalTherapist = null;
-					while(rs2.next())
-					{
-						Integer ptID=rs2.getInt("ID");
-						String namePhysical=rs2.getString("Name");
-						String ptemail=rs2.getString("Email");
-						String ptsport = rs2.getString("SportType");
-						physicalTherapist=new PhysicalTherapist(ptID,namePhysical,ptemail,ptsport);
-						patient = new Patient(patID, name, address,DOB,phone,email,sportType,disability,physicalTherapist);
-						patientCreated=true;
-					}
-					ps2.close();
-					rs2.close();
 				}
 			}
 			rs.close();
@@ -216,6 +166,7 @@ public class SQLitePatientManager implements PatientManager
 				String surgeries=rs.getString(6);
 				Float weight=rs.getFloat(7);
 				Integer height=rs.getInt(8);
+				//TODO añadir EMG ECG
 				mh=new MedicalHistory(id,name,dob,diseases,allergies,surgeries,weight,height);
 			}
 			ps.close();
@@ -227,23 +178,6 @@ public class SQLitePatientManager implements PatientManager
 		return mh;
 	}
 
-	@Override
-	public void changePhysicalTherapist(Patient patient,Integer newptID)
-	{
-		try
-		{
-			String sql = "UPDATE patient SET PTID=? WHERE ID=?";
-			PreparedStatement ps = c.prepareStatement(sql);
-			ps.setInt(1, newptID);
-			ps.setInt(2, patient.getId());
-			ps.executeUpdate();
-			ps.close();
-		}
-		catch (SQLException e)
-		{
-			e.printStackTrace();
-		}
-	}
 
 	@Override
 	public Integer searchPatientByEmail(String email)

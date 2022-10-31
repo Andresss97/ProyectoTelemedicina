@@ -52,12 +52,10 @@ public class SQLiteManager implements DBManager
 		try
 		{
 			Class.forName("org.sqlite.JDBC");
-			this.c=DriverManager.getConnection("jdbc:sqlite:./db/RehabilitationCenter.db");
+			this.c=DriverManager.getConnection("jdbc:sqlite:./Database/Telemedicine.db");
 			c.createStatement().execute("PRAGMA foreign_keys=ON");
 			patient = new SQLitePatientManager(c);
 			doctor = new SQLiteDoctorManager(c);
-			physicalTherapist = new SQLitePhysicalTherapistManager(c);
-			appointment = new SQLiteAppointmentManager(c);
 
 		}
 		catch (Exception e)
@@ -95,7 +93,7 @@ public class SQLiteManager implements DBManager
 					+   "Email 		    TEXT  NOT NULL,"
 					+   "MHID           INTEGER,"
 					+   "FOREIGN KEY (MHID) REFERENCES medicalHistory(ID),"
-					+ ")";
+					+   ")";
 			st1.executeUpdate(sq1);
 			st1.close();
 			Statement st2=c.createStatement();
@@ -108,6 +106,7 @@ public class SQLiteManager implements DBManager
 					+   " Surgeries     TEXT,"
 					+   " WeightKg      FLOAT,"
 					+   " HeightCm      INTEGER"
+					//TODO mirar como se guardan los archivos .txt
 					+ 	" EMG			file"
 					+ 	" ECG			file"
 					+ 	")";
@@ -136,7 +135,5 @@ public class SQLiteManager implements DBManager
 		{
 			e.printStackTrace();
 		}
-
 	}
-
 }

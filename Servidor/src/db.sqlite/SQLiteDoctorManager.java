@@ -112,7 +112,7 @@ public class SQLiteDoctorManager implements DoctorManager {
 		try 
 		{
 			String sql = "UPDATE medicalHistory SET ID=?, Name=?, DOB=?, Diseases=?, Allergies=?, Surgeries=?,"
-					+ "WeightKg=?, HeightCm=? WHERE ID=?";
+					+ "WeightKg=?, HeightCm=?, EMG=?, ECG=? WHERE ID=?";
 			PreparedStatement s = c.prepareStatement(sql);
 			s.setInt(1, MH.getID());
 			s.setString(2, MH.getName());
@@ -123,6 +123,7 @@ public class SQLiteDoctorManager implements DoctorManager {
 			s.setFloat(7, MH.getWeightKg());
 			s.setInt(8, MH.getHeightCm());
 			s.setInt(9, MH.getID());
+			s.set //TODO ver como se pone el file y añadir esos dos
 			s.executeUpdate();
 			s.close();
 		}
@@ -152,170 +153,9 @@ public class SQLiteDoctorManager implements DoctorManager {
 		return id;
 	}
 
-	@Override
-	public void createTreatment(Treatment t,Integer patientID,Integer DOCID,PatientManager pm) 
-	{
-		try 
-		{
-			String sql = "INSERT INTO treatment (type, length,DOCID) "
-					+ "VALUES (?,?,?);";
-			PreparedStatement ps = c.prepareStatement(sql);
-			ps.setString(1, t.getType());
-			ps.setInt(2, t.getLenght());
-			ps.setInt(3,DOCID);
-			ps.executeUpdate();
-			ps.close();
-		}
-		catch (Exception e) 
-		{
-			e.printStackTrace();
-		}
-		Integer treatmentID=getLastId();
-		try
-		{
-			String sql2="INSERT INTO PatientTreatment (PATID,TREATID) VALUES (?,?)";
-			PreparedStatement ps2 = c.prepareStatement(sql2);
-			ps2.setInt(1, patientID);
-			ps2.setInt(2, treatmentID);
-			ps2.executeUpdate();
-			ps2.close();
-		}
-		catch(SQLException e)
-		{
-			e.printStackTrace();
-		}
-	}
-
-	@Override
-	public void modifyTreatment(Treatment t) 
-	{
-			try 
-			{
-				// Changes the Type and Length of a particular treatment
-				String sql = "UPDATE treatment SET Type	=?, Length=? WHERE ID=?";
-				PreparedStatement s = c.prepareStatement(sql);
-				s.setString(1, t.getType());
-				s.setInt(2, t.getLenght());
-				s.setInt(3, t.getId());
-				s.executeUpdate();
-				s.close();
-			} 
-			catch (Exception e) 
-			{
-				e.printStackTrace();
-			}
-	}
-
-	@Override
-	public void deleteTreatment(Treatment t,Integer patID) 
-	{	
-		try 
-		{
-			String sql2 = "DELETE FROM PatientTreatment WHERE PATID=? AND TREATID=?";
-			PreparedStatement ps2= c.prepareStatement(sql2);			
-			ps2.setInt(1, patID);
-			ps2.setInt(2, t.getId());
-			ps2.executeUpdate();
-			ps2.close();
-		}
-		catch(SQLException e)
-		{
-			e.printStackTrace();
-		}
-	}
-
-	@Override
-	public List<Treatment> listTreatments(Integer IDPat)
-	{
-		List<Treatment> treatmentList = new ArrayList<Treatment>();
-		try 
-		{
-			String sql = "SELECT * FROM treatment AS t JOIN PatientTreatment AS pt ON t.ID=pt.TREATID JOIN patient AS p ON p.ID=pt.PATID "
-					+ "WHERE PATID=?";
-			PreparedStatement prep = c.prepareStatement(sql);
-			prep.setInt(1, IDPat);
-			ResultSet rs = prep.executeQuery();
-			while (rs.next()) 
-			{
-				int id = rs.getInt(1);
-				String type= rs.getString(2);
-				int length= rs.getInt(3);
-				Treatment newTreat = new Treatment(id,type,length);
-				// Add it to the list
-				treatmentList.add(newTreat);
-			}
-			prep.close();
-		} 
-		catch (Exception e) 
-		{
-			e.printStackTrace();
-		}
-		// Return the list
-		return treatmentList;
-	}
-
-	@Override
-	public Treatment readTreatment(Treatment t)
-	{
-		Treatment treatment=null;
-		try
-		{
-			String sql="SELECT * FROM treatment WHERE ID=?";
-			PreparedStatement ps=c.prepareStatement(sql);
-			ps.setInt(1,t.getId());
-			ResultSet rs=ps.executeQuery();
-			while(rs.next())
-			{
-				Integer id=rs.getInt(1);
-				String type=rs.getString(2);
-				Integer lenght=rs.getInt(3);
-				treatment = new Treatment(id,type,lenght);
-
-			}
-			rs.close();
-			ps.close();
-		}
-		catch (SQLException e)
-		{
-			e.printStackTrace();
-		}
-		return treatment;
-	}
 	
 	@Override
-	public Treatment getTreatment( Integer treatID) 
-	{
-		Treatment treatment =null;
-		try
-		{
-			String sql="SELECT * from treatment  AS t JOIN patient AS p ON t.id=p.id WHERE t.id=?";
-			PreparedStatement ps=c.prepareStatement(sql);
-			ps.setInt(1, treatID);
-			ResultSet rs=ps.executeQuery();
-			boolean treatmentCreated=false;
-			while (rs.next())
-			{
-				if(!treatmentCreated)
-				{
-					Integer id=rs.getInt("ID");
-					String  type=rs.getString("Type");
-					Integer length=rs.getInt("Length");
-					treatment = new Treatment(id,type,length);
-					treatmentCreated=true;
-				}
-			}
-			rs.close();
-			ps.close();
-		}
-		catch(SQLException e)
-		{
-			e.printStackTrace();
-		}
-		return treatment;
-	}
-
-	@Override
-	public List <Patient> SearchByName(String name,Integer docId)
+	public List <Patient> searchPatientByName(String name,Integer docId)
 	{
 		List <Patient> patientList = new ArrayList<Patient>();
 		try
@@ -334,9 +174,7 @@ public class SQLiteDoctorManager implements DoctorManager {
 				Date date= rs.getDate(4);
 				int phone= rs.getInt(5);
 				String email= rs.getString(6);
-				String sport = rs.getString(7);
-				String disability= rs.getString(8);
-				Patient newPat= new Patient(id,patientName,address,date,phone,email,sport,disability);
+				Patient newPat= new Patient(id,patientName,address,date,phone,email);
 				patientList.add(newPat);
 			}
 			
@@ -394,12 +232,8 @@ public class SQLiteDoctorManager implements DoctorManager {
 				String name = rs.getString(2);
 				Date DOB = rs.getDate(4);
 				String eMail = rs.getString(6);
-				String sport = rs.getString(7);
-				String disability = rs.getString(8); 
-				Patient patient = new Patient(patID, name, DOB, eMail, sport, disability);
-				PhysicalTherapist pTherapist = patient.getPhysicalTerapist();
-				Patient patient2 = new Patient(patID, name, DOB, eMail, sport, disability, pTherapist);
-				doctorsPatients.add(patient2);
+				Patient patient = new Patient(patID, name, DOB, eMail);
+				doctorsPatients.add(patient);
 			}
 			prepS.close();
 		}
