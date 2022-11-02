@@ -93,8 +93,36 @@ public class SQLiteDoctorManager implements DoctorManager {
 				String surgeries = rs.getString("surgeries");
 				Float weightKg = rs.getFloat("weightKg");
 				Integer heightCm = rs.getInt("heightCm");
-
 				mh = new MedicalHistory(id,name,DOB,desease,allergies,surgeries,weightKg,heightCm);
+			}
+			rs.close();
+			ps.close();
+		}
+		catch (SQLException e)
+		{
+			e.printStackTrace();
+		}
+
+	}
+	
+	@Override
+	public void readDR(Integer ID) 
+	{
+		MedicalHistory dr = null; 
+		try 
+		{
+			String sql = "SELECT * FROM dailyRegisters WHERE ID=?";
+			PreparedStatement ps = c.prepareStatement(sql);
+			ps.setInt(1,ID);
+			ResultSet rs = ps.executeQuery();
+			while(rs.next())
+			{
+				Integer id = rs.getInt("ID");
+				Date day = rs.getDate("Date");
+				String symptoms = rs.getString("Symptoms");
+				String EMG = rs.getString("EMG");
+				String ECG = rs.getString("ECG");
+				dr = new DailyRegister(id,day,symptoms,EMG,ECG);
 			}
 			rs.close();
 			ps.close();
@@ -112,7 +140,7 @@ public class SQLiteDoctorManager implements DoctorManager {
 		try 
 		{
 			String sql = "UPDATE medicalHistory SET ID=?, Name=?, DOB=?, Diseases=?, Allergies=?, Surgeries=?,"
-					+ "WeightKg=?, HeightCm=?, EMG=?, ECG=? WHERE ID=?";
+					+ "WeightKg=?, HeightCm=? WHERE ID=?";
 			PreparedStatement s = c.prepareStatement(sql);
 			s.setInt(1, MH.getID());
 			s.setString(2, MH.getName());
@@ -123,7 +151,6 @@ public class SQLiteDoctorManager implements DoctorManager {
 			s.setFloat(7, MH.getWeightKg());
 			s.setInt(8, MH.getHeightCm());
 			s.setInt(9, MH.getID());
-			s.set //TODO ver como se pone el file y añadir esos dos
 			s.executeUpdate();
 			s.close();
 		}

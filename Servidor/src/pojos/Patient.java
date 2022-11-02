@@ -1,196 +1,176 @@
-
 package pojos;
-import java.io.*;
+
+import java.io.Serializable;
+import java.sql.Date;
 import java.util.ArrayList;
-import java.util.LinkedList;
 import java.util.List;
+import javax.xml.bind.annotation.*;
+import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 
-public class Patient extends Person {
+import xml.utils.SQLDateAdapter;
+public class Patient implements Serializable {
+
+	private static final long serialVersionUID = 1L;
+	private Integer id;
+	private String  name;
+	private String  address;
+	private Date 	dob;
+	private Integer phoneNumber;
+	private String  eMail;
+	private MedicalHistory medicalHistory;
+	private List<Doctor> doctors;
 	
-	private Integer ID;
-
-	private float weight;
+ 
 	
-	private float height;
-	
-	private int housePhone;
-	
-	private LinkedList<Doctor> doctors;
-
-	private LinkedList<Appointment> appointments;
-
-	private LinkedList<Illness> illnesses;
-
-	private LinkedList<Allergies> allergies;
-
-	private LinkedList<Surgeries> surgeries;
-
-	private LinkedList<Treatment> treatment;
-
-	private LinkedList<Vaccine> vaccines;
-
-	private ClinicalHistory cHistory;
-	
-	public Patient() { 
+	public Patient(Integer id, String name, String address, Date dob, Integer phoneNumber, String eMail) {
 		super();
-		this.weight = 0.0F;
-		this.height = 0.0F;
-		this.housePhone = 0;
-		this.doctors = new LinkedList<>();
-		this.appointments = new LinkedList<>();
-		this.illnesses = new LinkedList<>();
-		this.allergies = new LinkedList<>();
-		this.surgeries = new LinkedList<>();
-		this.vaccines = new LinkedList<>();
-		this.cHistory = new ClinicalHistory();
+		this.id = id;
+		this.name = name;
+		this.address = address;
+		this.dob = dob;
+		this.phoneNumber = phoneNumber;
+		this.eMail = eMail;
+		
+	}
+	
+
+	public Patient() {
+		super();
 	}
 
-	public float getWeight() {
-		return weight;
+	public Patient(Integer id, String name)
+	{
+		super();
+		this.id = id;
+		this.name = name;
 	}
 
-	public void setWeight(float weight) {
-		this.weight = weight;
+	public Patient(Integer id, String name, String address, Date dob, Integer phoneNumber, String eMail,MedicalHistory mh
+			,List<Doctor> docs)
+	{
+		super();
+		this.id = id;
+		this.name = name;
+		this.address = address;
+		this.dob = dob;
+		this.phoneNumber = phoneNumber;
+		this.eMail = eMail;
+		this.medicalHistory=mh;
+		this.doctors = docs;
 	}
 
-	public float getHeight() {
-		return height;
+	public Patient(String name, String address, Date dob, Integer phoneNumber, String eMail) {
+		super();
+		this.name = name;
+		this.address = address;
+		this.dob = dob;
+		this.phoneNumber = phoneNumber;
+		this.eMail = eMail;
 	}
 
-	public void setHeight(float height) {
-		this.height = height;
+
+	public Integer getId() {
+		return id;
 	}
 
-	public int getHousePhone() {
-		return housePhone;
+	public void setId(Integer id) {
+		this.id = id;
 	}
 
-	public void setHousePhone(int housePhone) {
-		this.housePhone = housePhone;
+	public String getName() {
+		return name;
 	}
 
+	public void setName(String name) {
+		this.name = name;
+	}
+
+	public String getAddress() {
+		return address;
+	}
+
+	public void setAddress(String adress) {
+		this.address = adress;
+	}
+
+	public Date getDob() {
+		return dob;
+	}
+
+	public void setDob(Date dob) {
+		this.dob = dob;
+	}
+
+	public Integer getPhoneNumber() {
+		return phoneNumber;
+	}
+
+	public void setPhoneNumber(Integer phoneNumber) {
+	this.phoneNumber = phoneNumber;
+	}
+
+
+	public MedicalHistory getMedicalHistory() {
+		return medicalHistory;
+	}
+
+
+	public void setMedicalHistory(MedicalHistory medicalHistory) {
+		this.medicalHistory = medicalHistory;
+	}
+
+
+	
 	public List<Doctor> getDoctors() {
 		return doctors;
 	}
 
-	public void setDoctors(LinkedList<Doctor> doctors) {
+
+	public void setDoctors(List<Doctor> doctors) {
 		this.doctors = doctors;
 	}
 
-	public LinkedList<Appointment> getAppointments() {
-		return appointments;
+
+	public String geteMail() {
+		return eMail;
 	}
 
-	public void setAppointments(LinkedList<Appointment> appointments) {
-		this.appointments = appointments;
+	public void seteMail(String eMail) {
+		this.eMail = eMail;
 	}
 
-	public LinkedList<Illness> getIllnesses() {
-		return illnesses;
+
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((id == null) ? 0 : id.hashCode());
+		return result;
 	}
 
-	public void setIllnesses(LinkedList<Illness> illnesses) {
-		this.illnesses = illnesses;
-	}
 
-	public List<Allergies> getAllergies() {
-		return allergies;
-	}
-
-	public void setAllergies(LinkedList<Allergies> allergies) {
-		this.allergies = allergies;
-	}
-
-	public List<Surgeries> getSurgeries() {
-		return surgeries;
-	}
-
-	public void setSurgeries(LinkedList<Surgeries> surgeries) {
-		this.surgeries = surgeries;
-	}
-
-	public List<Vaccine> getVaccines() {
-		return vaccines;
-	}
-
-	public void setVaccines(LinkedList<Vaccine> vaccines) {
-		this.vaccines = vaccines;
-	}
-	
-	public void addDoctor(Doctor doctor){
-		this.doctors.add(doctor);
-	} 
-	
-	public void removeDoctor(Doctor doctor){
-		this.doctors.remove(doctor);
-	}
-	
-	public void addIllness(Illness illness){
-		this.illnesses.add(illness);
-	} 
-	
-	public void removeIllness(Illness illness){
-		this.illnesses.remove(illness);
-	}
-	
-	public void addAppointment(Appointment appointment){
-		this.appointments.add(appointment);
-	} 
-	
-	public void removeAppointment(Appointment appointment){
-		this.appointments.remove(appointment);
-	}
-	
-	public void addAllergy(Allergies allergies){
-		this.allergies.add(allergies);
-	} 
-	
-	public void removeAllergy(Allergies allergies){
-		this.allergies.remove(allergies);
-	}
-	
-	public void addSurgery(Surgeries surgery){
-		this.surgeries.add(surgery);
-	} 
-	
-	public void removeSurgery(Surgeries surgery){
-		this.surgeries.remove(surgery);
-	}
-	
-	public void addVaccine(Vaccine vaccine){
-		this.vaccines.add(vaccine);
-	} 
-	
-	public void removeVaccine(Vaccine vaccine){
-		this.vaccines.remove(vaccine);
-	}
-	
-	public int getID2() {
-		return ID;
-	}
-
-	public void setID2(Integer iD) {
-		this.ID = iD;
-	}
-
-	public LinkedList<Treatment> getTreatment() {
-		return treatment;
-	}
-
-	public void setTreatment(LinkedList<Treatment> treatment) {
-		this.treatment = treatment;
-	}
-	
-	public ClinicalHistory getcHistory() {
-		return cHistory;
-	}
-
-	public void setcHistory(ClinicalHistory cHistory) {
-		this.cHistory = cHistory;
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Patient other = (Patient) obj;
+		if (id == null) {
+			if (other.id != null)
+				return false;
+		} else if (!id.equals(other.id))
+			return false;
+		return true;
 	}
 
 	@Override
 	public String toString() {
-		return "Patient: "+ name + " " + surname;
+		return "Patient [ID=" + id + ",Name=" + name + ",Address=" + address + ",DOB=" + dob + ",Phone number="
+				+ phoneNumber + ",Email=" + eMail +"]";
 	}
+	
+	
 }

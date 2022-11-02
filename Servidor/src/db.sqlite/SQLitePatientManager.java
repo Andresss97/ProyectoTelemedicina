@@ -113,7 +113,7 @@ public class SQLitePatientManager implements PatientManager
 	
 
 	@Override
-	public Patient getPatient(Integer id) //returns the patient 
+	public Patient getPatient(Integer id) //returns the patient given the id
 	{
 		Patient patient =null;
 		try
@@ -147,7 +147,7 @@ public class SQLitePatientManager implements PatientManager
 	}
 
 	@Override
-	public MedicalHistory getMedicalHistory(Patient p)
+	public MedicalHistory getMedicalHistory(Patient p) //returns the medical history given a patient by its id
 	{
 		MedicalHistory mh=null;
 		try

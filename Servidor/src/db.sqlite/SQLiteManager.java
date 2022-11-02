@@ -92,7 +92,10 @@ public class SQLiteManager implements DBManager
 					+   "Phone 		    INTEGER NOT NULL,"
 					+   "Email 		    TEXT  NOT NULL,"
 					+   "MHID           INTEGER,"
+					+   "DRID           INTEGER,"	
 					+   "FOREIGN KEY (MHID) REFERENCES medicalHistory(ID),"
+					+   "FOREIGN KEY (DRID) REFERENCES dailyRegisters(ID),"
+					//TODO, no se si poner la foreign key en el daily register
 					+   ")";
 			st1.executeUpdate(sq1);
 			st1.close();
@@ -105,13 +108,20 @@ public class SQLiteManager implements DBManager
 					+   " Allergies     TEXT,"
 					+   " Surgeries     TEXT,"
 					+   " WeightKg      FLOAT,"
-					+   " HeightCm      INTEGER"
-					//TODO mirar como se guardan los archivos .txt
-					+ 	" EMG			file"
-					+ 	" ECG			file"
+					+   " HeightCm      INTEGER,"
 					+ 	")";
 			st2.executeUpdate(sq2);
-			st2.close();			
+			st2.close();
+			Statement st4=c.createStatement();
+			String sq4="CREATE TABLE  IF NOT EXISTS  dailyRegisters"
+					+  "(ID 		    INTEGER PRIMARY KEY AUTOINCREMENT,"
+					+  "Date			DATE NOT NULL,"
+					+  "Symptoms		TEXT NOT NULL,"
+					+  "EMG				TEXT NOT NULL,"
+					+  "ECG				TEXT NOT NULL,"
+					+  ")";
+			st4.executeUpdate(sq4);
+			st4.close();
 			Statement st3=c.createStatement();
 			String sq3="CREATE TABLE  IF NOT EXISTS  doctor"
 					+  "(ID 		    INTEGER PRIMARY KEY AUTOINCREMENT,"
@@ -123,13 +133,14 @@ public class SQLiteManager implements DBManager
 					+ "	Specialty		TEXT NOT NULL,"
 					+ "	Salary			DOUBLE NOT NULL)";
 			st3.executeUpdate(sq3);
-			st3.close();
-			Statement st4=c.createStatement();
-			String sq4="CREATE TABLE IF NOT EXISTS	PatientDoctor"
+			st3.close();			
+			Statement st5=c.createStatement();
+			String sq5="CREATE TABLE IF NOT EXISTS	PatientDoctor"
 					+ "(PATID			INTEGER REFERENCES patient(ID),"
 					+ " DOCID			INTEGER REFERENCES doctor(ID) ON DELETE CASCADE)";
-			st4.executeUpdate(sq4);
-			st4.close();  
+			st5.executeUpdate(sq5);
+			st5.close();  
+			
 		}
 		catch (SQLException e)
 		{
