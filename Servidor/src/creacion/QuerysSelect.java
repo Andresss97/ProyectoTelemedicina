@@ -686,4 +686,18 @@ public class QuerysSelect {
 		
 		return id2;
 	}
+	
+	public String selectAdminPass(String user) throws SQLException {
+		String query = "SELECT password from mappinglogin where username = " + user;
+		PreparedStatement st = conn.getConnect().prepareStatement(query);
+		
+		ResultSet set = st.executeQuery();
+		String password = set.getString("password");
+		
+		st.close();
+		set.close();
+		
+		return password;
+		
+	}
 }

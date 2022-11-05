@@ -10,8 +10,7 @@
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.layout.VBox?>
 
-
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" style="-fx-background-color: white;" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Interfaz.VisionAdministrador">
+<BorderPane fx:id="container" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" style="-fx-background-color: white;" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Interfaz.VisionAdministrador">
    <top>
       <MenuBar BorderPane.alignment="CENTER">
         <menus>
@@ -21,16 +20,25 @@
               <MenuItem fx:id="changeCredentialsButton" mnemonicParsing="false" onAction="#onActionhangeCredentials" text="Change Credentials" />
             </items>
           </Menu>
+            <Menu fx:id="botonLogOff" mnemonicParsing="false" onAction="#onActionLogOff" text="Log off" />
         </menus>
       </MenuBar>
    </top>
    <left>
-      <VBox alignment="TOP_CENTER" prefHeight="200.0" prefWidth="100.0" style="-fx-background-color: white;" BorderPane.alignment="CENTER">
+      <VBox alignment="TOP_CENTER" prefHeight="335.0" prefWidth="81.0" style="-fx-background-color: white;" BorderPane.alignment="CENTER">
          <children>
             <Pane prefHeight="18.0" prefWidth="99.0" />
-            <Label fx:id="patients" />
+            <Label fx:id="patients">
+               <VBox.margin>
+                  <Insets left="15.0" />
+               </VBox.margin>
+            </Label>
             <Pane layoutX="10.0" layoutY="10.0" prefHeight="18.0" prefWidth="99.0" />
-            <Label fx:id="doctors" />
+            <Label fx:id="doctors">
+               <VBox.margin>
+                  <Insets left="15.0" />
+               </VBox.margin>
+            </Label>
          </children>
       </VBox>
    </left>
@@ -53,4 +61,23 @@
          </BorderPane.margin>
       </Button>
    </bottom>
+   <center>
+      <BorderPane fx:id="cContainer" BorderPane.alignment="CENTER">
+         <center>
+            <VBox alignment="CENTER">
+               <children>
+                  <Label contentDisplay="CENTER" text="Welcome to the server of the Telemedicine subject.">
+                     <opaqueInsets>
+                        <Insets />
+                     </opaqueInsets>
+                     <padding>
+                        <Insets bottom="10.0" />
+                     </padding>
+                  </Label>
+                  <Label text="This application has been developed by Teresa Romero, María Nuñez and Andrés de Pereda." />
+               </children>
+            </VBox>
+         </center>
+      </BorderPane>
+   </center>
 </BorderPane>

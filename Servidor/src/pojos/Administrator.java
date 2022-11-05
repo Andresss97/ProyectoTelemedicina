@@ -6,6 +6,7 @@ import java.util.Objects;
 public class Administrator implements Serializable {
 	private String username;
 	private String password;
+	private Integer id;
 	
 	public Administrator() {
 		this.username = "admin";
@@ -26,6 +27,15 @@ public class Administrator implements Serializable {
 
 	public void setPassword(String password) {
 		this.password = password;
+	}
+	
+	
+	public Integer getId() {
+		return id;
+	}
+
+	public void setId(Integer id) {
+		this.id = id;
 	}
 
 	@Override

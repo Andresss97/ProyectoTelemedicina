@@ -192,4 +192,8 @@ public class QuerysInsert {
 		st.executeUpdate();
 		st.close();
 	}
+	
+	public void insertPasswordAdmin(Administrator admin) {
+		
+	}
 }
