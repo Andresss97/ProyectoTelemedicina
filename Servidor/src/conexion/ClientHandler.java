@@ -67,44 +67,7 @@ public class ClientHandler implements Runnable {
 		
 		
 		while(this.socket.isConnected()) {
-			try {
-				Cliente cliente;
-				if((cliente =this.clientes.get(this)).getPatient() != null) {
-					Patient pacient = cliente.getPatient();
-					Object obj = buffR.readObject();
-					
-					if(obj instanceof Address) {
-						continue;
-					}
-					else if(obj instanceof Allergies) {
-						continue;
-					}
-					else if(obj instanceof Appointment) {
-						continue;
-					}
-					else if(obj instanceof ClinicalHistory) {
-						continue;
-					}
-					else if(obj instanceof Illness) {
-						continue;
-					}
-					else if(obj instanceof Surgeries) {
-						continue;
-					}
-					else if(obj instanceof Treatment) {
-						continue;
-					}
-					else if(obj instanceof Vaccine) {
-						continue;
-					}
-				}
-				else if((cliente = this.clientes.get(this)).getDoctor() != null) {
-					
-				}
-			}
-			catch(Exception ex) {
-				break;
-			}
+
 		}
 	}
 

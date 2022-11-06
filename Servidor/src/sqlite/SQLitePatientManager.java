@@ -1,4 +1,5 @@
-package db.sqlite;
+package sqlite;
+import interfaces.PatientManager;
 import java.sql.Connection;
 
 import java.sql.Date;
@@ -8,7 +9,6 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-import db.interfaces.*;
 import pojos.*;
 
 
@@ -87,7 +87,7 @@ public class SQLitePatientManager implements PatientManager
 			ps.setString(5, mh.getSurgeries());
 			ps.setFloat(6,mh.getWeightKg());
 			ps.setInt(7,mh.getHeightCm());
-			//TODO añadir el EMG y el ECG
+			//TODO aï¿½adir el EMG y el ECG
 			ps.executeUpdate();
 			ps.close();
 
@@ -166,7 +166,7 @@ public class SQLitePatientManager implements PatientManager
 				String surgeries=rs.getString(6);
 				Float weight=rs.getFloat(7);
 				Integer height=rs.getInt(8);
-				//TODO añadir EMG ECG
+				//TODO aï¿½adir EMG ECG
 				mh=new MedicalHistory(id,name,dob,diseases,allergies,surgeries,weight,height);
 			}
 			ps.close();
@@ -206,7 +206,7 @@ public class SQLitePatientManager implements PatientManager
 	@Override
 	public boolean checkDoctor(Integer patID, Integer docID) 
 	{
-		ArrayList<Integer>docsIds = new ArrayList<>();
+		ArrayList<Integer>docsIds = new ArrayList();
 		boolean inTable = true;
 		try
 		{
@@ -252,6 +252,10 @@ public class SQLitePatientManager implements PatientManager
 			e.printStackTrace();
 		}
 	}
+
+    public List<Object> listTreatment(Patient ptnt) {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
 }
 
 

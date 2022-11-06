@@ -1,14 +1,10 @@
-package db.jpa;
+package jpa;
 
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.persistence.EntityManager;
-import javax.persistence.NoResultException;
-import javax.persistence.Persistence;
-import javax.persistence.Query;
 
 import db.interfaces.UserManager;
 import pojos.users.Role;

@@ -4,8 +4,6 @@ import java.sql.Date;
 import java.util.ArrayList;
 import java.util.LinkedList;
 
-import javafx.collections.ObservableList;
-
 public class Doctor extends Person  {
 
 	private Integer ID;

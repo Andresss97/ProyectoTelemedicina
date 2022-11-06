@@ -4,8 +4,6 @@ import java.io.Serializable;
 import java.sql.Date;
 import java.util.Arrays;
 
-import javafx.scene.image.Image;
-
 public abstract class Person implements Serializable {
 
 	protected String username;

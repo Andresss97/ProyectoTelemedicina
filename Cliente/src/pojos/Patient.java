@@ -36,12 +36,12 @@ public class Patient extends Person {
 		this.weight = 0.0F;
 		this.height = 0.0F;
 		this.housePhone = 0;
-		this.doctors = new LinkedList<>();
-		this.appointments = new LinkedList<>();
-		this.illnesses = new LinkedList<>();
-		this.allergies = new LinkedList<>();
-		this.surgeries = new LinkedList<>();
-		this.vaccines = new LinkedList<>();
+		this.doctors = new LinkedList();
+		this.appointments = new LinkedList();
+		this.illnesses = new LinkedList();
+		this.allergies = new LinkedList();
+		this.surgeries = new LinkedList();
+		this.vaccines = new LinkedList();
 		this.cHistory = new ClinicalHistory();
 	}
 

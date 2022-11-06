@@ -3,10 +3,6 @@ package pojos;
 import java.io.Serializable;
 import java.sql.Date;
 import java.util.List;
-import javax.xml.bind.annotation.*;
-import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
-
-import xml.utils.SQLDateAdapter;
 
 
 public class Doctor implements Serializable{

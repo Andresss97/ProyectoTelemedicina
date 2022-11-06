@@ -1,4 +1,4 @@
-package db.interfaces;
+package interfaces;
 
 public interface DBManager {
 	

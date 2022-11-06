@@ -1,4 +1,4 @@
-package db.sqlite;
+package sqlite;
 
 import java.sql.Connection;
 import java.sql.Date;
@@ -7,8 +7,8 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
-import db.interfaces.DoctorManager;
-import db.interfaces.PatientManager;
+import interfaces.DoctorManager;
+import interfaces.PatientManager;
 import pojos.Patient;
 import pojos.PhysicalTherapist;
 import pojos.Doctor;

@@ -1,13 +1,13 @@
-package db.sqlite;
+package sqlite;
 
 import java.sql.*;
 import java.time.format.DateTimeFormatter;
 import java.util.Date;
 
 import db.interfaces.AppointmentManager;
-import db.interfaces.DBManager;
-import db.interfaces.DoctorManager;
-import db.interfaces.PatientManager;
+import interfaces.DBManager;
+import interfaces.DoctorManager;
+import interfaces.PatientManager;
 import db.interfaces.PhysicalTherapistManager;
 
 public class SQLiteManager implements DBManager 

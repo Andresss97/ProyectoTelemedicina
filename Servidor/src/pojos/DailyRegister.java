@@ -2,8 +2,6 @@ package pojos;
 
 import java.io.Serializable;
 import java.sql.Date;
-import javax.xml.bind.annotation.*;
-
 
 
 public class DailyRegister implements Serializable 
@@ -17,14 +15,14 @@ public class DailyRegister implements Serializable
 	
 	
 	
-	public DailyRegister(Integer ID, Date day, String symptoms, String EMG, String ECG)
+	/*public DailyRegister(Integer ID, Date day, String symptoms, String EMG, String ECG)
 	{
 		ID = ID;
 		Day = day;
 		Symptoms = symptoms;
 		EMG = EMG;
 		ECG = ECG;
-	}
+	}*/
 	
 	public DailyRegister(Integer ID, Date day, String symptoms, String EMG, String ECG)
 	{
@@ -86,7 +84,7 @@ public class DailyRegister implements Serializable
 
 	@Override
 	public String toString() {
-		return "DailyRegister [ID=" + ID + ", Day=" + Day + ", Simptoms=" + Simptoms + ", EMG=" + EMG
+		return "DailyRegister [ID=" + ID + ", Day=" + Day + ", Simptoms=" + this.Symptoms + ", EMG=" + EMG
 				+ ", ECG=" + ECG + "]";
 	}
 	
