@@ -106,12 +106,12 @@ public class SQLiteDoctorManager implements DoctorManager {
 	}
 	
 	@Override
-	public void readDR(Integer ID) 
+	public void readDR(Integer ID) //Reads the register by patient id
 	{
 		MedicalHistory dr = null; 
 		try 
 		{
-			String sql = "SELECT * FROM dailyRegisters WHERE ID=?";
+			String sql = "SELECT * FROM dailyRegisters WHERE PID=?";
 			PreparedStatement ps = c.prepareStatement(sql);
 			ps.setInt(1,ID);
 			ResultSet rs = ps.executeQuery();

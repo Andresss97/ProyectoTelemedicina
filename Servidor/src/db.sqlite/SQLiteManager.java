@@ -55,7 +55,7 @@ public class SQLiteManager implements DBManager
 			this.c=DriverManager.getConnection("jdbc:sqlite:./Database/Telemedicine.db");
 			c.createStatement().execute("PRAGMA foreign_keys=ON");
 			patient = new SQLitePatientManager(c);
-			doctor = new SQLiteDoctorManager(c);
+			doctor  = new SQLiteDoctorManager(c);
 
 		}
 		catch (Exception e)
@@ -91,11 +91,8 @@ public class SQLiteManager implements DBManager
 					+   "DOB            DATE  NOT NULL,"
 					+   "Phone 		    INTEGER NOT NULL,"
 					+   "Email 		    TEXT  NOT NULL,"
-					+   "MHID           INTEGER,"
-					+   "DRID           INTEGER,"	
+					+   "MHID           INTEGER,"	
 					+   "FOREIGN KEY (MHID) REFERENCES medicalHistory(ID),"
-					+   "FOREIGN KEY (DRID) REFERENCES dailyRegisters(ID),"
-					//TODO, no se si poner la foreign key en el daily register
 					+   ")";
 			st1.executeUpdate(sq1);
 			st1.close();
@@ -119,6 +116,8 @@ public class SQLiteManager implements DBManager
 					+  "Symptoms		TEXT NOT NULL,"
 					+  "EMG				TEXT NOT NULL,"
 					+  "ECG				TEXT NOT NULL,"
+					+  "PID          	INTEGER,"		
+					+  "FOREIGN KEY (PID) REFERENCES patient(ID),"
 					+  ")";
 			st4.executeUpdate(sq4);
 			st4.close();
