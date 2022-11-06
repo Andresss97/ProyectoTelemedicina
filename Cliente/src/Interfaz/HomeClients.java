@@ -26,7 +26,6 @@ public class HomeClients extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jPanel1 = new javax.swing.JPanel();
         jPanel2 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         username = new javax.swing.JTextField();
@@ -39,11 +38,6 @@ public class HomeClients extends javax.swing.JFrame {
         setBackground(java.awt.Color.white);
         setName("Telemnedicine Client"); // NOI18N
         setResizable(false);
-
-        jPanel1.setBackground(java.awt.Color.white);
-        jPanel1.setBorder(null);
-        jPanel1.setForeground(java.awt.Color.white);
-        jPanel1.setLayout(new java.awt.BorderLayout());
 
         jLabel1.setText("User:");
 
@@ -101,18 +95,7 @@ public class HomeClients extends javax.swing.JFrame {
         username.getAccessibleContext().setAccessibleDescription("");
         password.getAccessibleContext().setAccessibleName("password");
 
-        jPanel1.add(jPanel2, java.awt.BorderLayout.CENTER);
-
-        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
-        getContentPane().setLayout(layout);
-        layout.setHorizontalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-        );
-        layout.setVerticalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-        );
+        getContentPane().add(jPanel2, java.awt.BorderLayout.CENTER);
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -120,8 +103,6 @@ public class HomeClients extends javax.swing.JFrame {
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         String uName = this.username.getText();
         String pWord = this.password.getText();
-        
-        
     }//GEN-LAST:event_jButton1ActionPerformed
 
     /**
@@ -164,7 +145,6 @@ public class HomeClients extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
-    private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPasswordField password;
     private javax.swing.JTextField username;
