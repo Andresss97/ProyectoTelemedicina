@@ -4,16 +4,33 @@
  */
 package Interfaz;
 
+import interfaces.Conector;
+import interfaces.ConnInterface;
+import interfaces.DBCreation;
+import java.io.File;
+
 /**
  *
  * @author andre
  */
 public class HomeServer extends javax.swing.JFrame {
-
+    
+    private static ConnInterface conector;
+    
     /**
      * Creates new form HomeServer
      */
     public HomeServer() {
+        this.conector = new Conector();
+        File url = new File(".//Database//DBproject.db");
+        
+        if(!url.exists()) {   
+            this.conector.connect();
+            DBCreation.createDB(conector);
+        }
+        else {
+            this.conector.connect();
+        }
         initComponents();
     }
 
