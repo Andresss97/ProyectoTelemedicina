@@ -4,10 +4,16 @@
  */
 package Interfaz;
 
-import interfaces.Conector;
-import interfaces.ConnInterface;
-import interfaces.DBCreation;
+import creation.Conector;
+import creation.ConnInterface;
+import creation.DBCreation;
+import creation.QuerysSelect;
+import java.awt.BorderLayout;
 import java.io.File;
+import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.JPanel;
 
 /**
  *
@@ -15,7 +21,7 @@ import java.io.File;
  */
 public class HomeServer extends javax.swing.JFrame {
     
-    private static ConnInterface conector;
+    public static ConnInterface conector;
     
     /**
      * Creates new form HomeServer
@@ -43,7 +49,8 @@ public class HomeServer extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jPanel1 = new javax.swing.JPanel();
+        container = new javax.swing.JPanel();
+        central = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         username = new javax.swing.JTextField();
         jLabel2 = new javax.swing.JLabel();
@@ -52,6 +59,9 @@ public class HomeServer extends javax.swing.JFrame {
         password = new javax.swing.JPasswordField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setResizable(false);
+
+        container.setLayout(new java.awt.BorderLayout());
 
         jLabel1.setText("User:");
 
@@ -60,36 +70,41 @@ public class HomeServer extends javax.swing.JFrame {
         jLabel3.setText("Forgot your password?");
 
         signInButton.setText("Sign in");
+        signInButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                signInButtonActionPerformed(evt);
+            }
+        });
 
-        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
-        jPanel1.setLayout(jPanel1Layout);
-        jPanel1Layout.setHorizontalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+        javax.swing.GroupLayout centralLayout = new javax.swing.GroupLayout(central);
+        central.setLayout(centralLayout);
+        centralLayout.setHorizontalGroup(
+            centralLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, centralLayout.createSequentialGroup()
                 .addContainerGap(168, Short.MAX_VALUE)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                .addGroup(centralLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(signInButton)
                     .addComponent(jLabel3)
-                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                        .addGroup(jPanel1Layout.createSequentialGroup()
+                    .addGroup(centralLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                        .addGroup(centralLayout.createSequentialGroup()
                             .addComponent(jLabel2)
                             .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                             .addComponent(password))
-                        .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGroup(centralLayout.createSequentialGroup()
                             .addComponent(jLabel1)
                             .addGap(34, 34, 34)
                             .addComponent(username, javax.swing.GroupLayout.PREFERRED_SIZE, 162, javax.swing.GroupLayout.PREFERRED_SIZE))))
                 .addGap(167, 167, 167))
         );
-        jPanel1Layout.setVerticalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
+        centralLayout.setVerticalGroup(
+            centralLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(centralLayout.createSequentialGroup()
                 .addGap(140, 140, 140)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                .addGroup(centralLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel1)
                     .addComponent(username, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                .addGroup(centralLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel2)
                     .addComponent(password, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -99,10 +114,39 @@ public class HomeServer extends javax.swing.JFrame {
                 .addContainerGap(113, Short.MAX_VALUE))
         );
 
-        getContentPane().add(jPanel1, java.awt.BorderLayout.CENTER);
+        container.add(central, java.awt.BorderLayout.CENTER);
+
+        getContentPane().add(container, java.awt.BorderLayout.PAGE_START);
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void signInButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_signInButtonActionPerformed
+        // TODO add your handling code here:
+        String user = this.username.getText();
+        String pass = this.password.getText();
+        
+        QuerysSelect qs = new QuerysSelect();
+        try {
+            int id = qs.selectUser(user, pass);
+            System.out.println(id);
+            if(id != 0) {
+                this.container.removeAll();
+                this.container.repaint();
+                
+                JPanel panelView = new AdminMainView();
+                this.container.add(panelView,BorderLayout.CENTER);
+                panelView.setVisible(true);
+                pack();
+            }
+            else {
+                
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(HomeServer.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+    }//GEN-LAST:event_signInButtonActionPerformed
 
     /**
      * @param args the command line arguments
@@ -140,10 +184,11 @@ public class HomeServer extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JPanel central;
+    private javax.swing.JPanel container;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
-    private javax.swing.JPanel jPanel1;
     private javax.swing.JPasswordField password;
     private javax.swing.JButton signInButton;
     private javax.swing.JTextField username;

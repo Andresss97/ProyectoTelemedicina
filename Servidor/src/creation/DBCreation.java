@@ -2,8 +2,9 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-package interfaces;
+package creation;
 
+import java.sql.SQLException;
 import java.sql.Statement;
 
 /**
@@ -15,10 +16,17 @@ public abstract class DBCreation {
     public static void createDB(ConnInterface conn) {
         if(conn.getClass().equals(Conector.class)) {
             Conector con = (Conector) conn;
+            QuerysInsert qi = new QuerysInsert();
             cTPatient(con);
             cTDoctor(con);
             cTTreatment(con);
             cTMappingLogIn(con);
+            
+            try {
+                qi.insertAdmin("admin", "indi");
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
         }
     }
     
