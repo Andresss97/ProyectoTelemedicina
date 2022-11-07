@@ -4,12 +4,15 @@
  */
 package Interfaz;
 
+import conexion.Server;
 import creation.Conector;
 import creation.ConnInterface;
 import creation.DBCreation;
 import creation.QuerysSelect;
 import java.awt.BorderLayout;
 import java.io.File;
+import java.io.IOException;
+import java.net.ServerSocket;
 import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -22,7 +25,7 @@ import javax.swing.JPanel;
 public class HomeServer extends javax.swing.JFrame {
     
     public static ConnInterface conector;
-    
+    private ServerSocket socket;
     /**
      * Creates new form HomeServer
      */
@@ -37,6 +40,13 @@ public class HomeServer extends javax.swing.JFrame {
         else {
             this.conector.connect();
         }
+        
+        new Thread(new Runnable() {
+            public void run() {
+                initSocket();
+            } 
+        }).start();
+        
         initComponents();
     }
 
@@ -147,7 +157,17 @@ public class HomeServer extends javax.swing.JFrame {
         }
         
     }//GEN-LAST:event_signInButtonActionPerformed
-
+    
+    private void initSocket() {
+        try {
+            this.socket = new ServerSocket(6000);
+            Server server = new Server(this.socket);
+            server.startServer();
+        } catch (IOException ex) {
+            Logger.getLogger(HomeServer.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+    }
     /**
      * @param args the command line arguments
      */

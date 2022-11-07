@@ -26,4 +26,28 @@ public class QuerysInsert {
         st.executeUpdate();
         st.close();
     }
+    
+    public void insertDoctor(String user, String password) throws SQLException {
+        String query = "INSERT into doctor (username, password) values (?,?)";
+        PreparedStatement st;
+        
+        st = this.conn.getConnect().prepareStatement(query);
+        st.setString(1,user);
+        st.setString(2,password);
+        st.executeUpdate();
+        st.close();
+    }
+    
+    public void insertUserType(String user, String password, int type) throws SQLException {
+        String query;
+        query = "INSERT into mappinglogin (username, password,usertype) values (?,?,?)";
+        PreparedStatement st;
+        st = conn.getConnect().prepareStatement(query);
+
+        st.setString(1, user);
+        st.setString(2, password);
+        st.setInt(3, type);
+        st.executeUpdate();
+        st.close();
+    }
 }
