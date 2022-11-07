@@ -33,6 +33,7 @@ public class AdminMainView extends javax.swing.JPanel {
         patientsCount = new javax.swing.JLabel();
         doctorsCount = new javax.swing.JLabel();
         central = new javax.swing.JPanel();
+        jButton1 = new javax.swing.JButton();
 
         setPreferredSize(new java.awt.Dimension(561, 371));
         setLayout(new java.awt.BorderLayout());
@@ -103,15 +104,28 @@ public class AdminMainView extends javax.swing.JPanel {
 
         central.setPreferredSize(new java.awt.Dimension(561, 371));
 
+        jButton1.setText("Refresh");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout centralLayout = new javax.swing.GroupLayout(central);
         central.setLayout(centralLayout);
         centralLayout.setHorizontalGroup(
             centralLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 486, Short.MAX_VALUE)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, centralLayout.createSequentialGroup()
+                .addContainerGap(382, Short.MAX_VALUE)
+                .addComponent(jButton1)
+                .addGap(32, 32, 32))
         );
         centralLayout.setVerticalGroup(
             centralLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 271, Short.MAX_VALUE)
+            .addGroup(centralLayout.createSequentialGroup()
+                .addGap(39, 39, 39)
+                .addComponent(jButton1)
+                .addContainerGap(204, Short.MAX_VALUE))
         );
 
         add(central, java.awt.BorderLayout.CENTER);
@@ -125,11 +139,16 @@ public class AdminMainView extends javax.swing.JPanel {
         // TODO add your handling code here:
     }//GEN-LAST:event_closeButtonActionPerformed
 
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jButton1ActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel central;
     private javax.swing.JButton closeButton;
     private javax.swing.JLabel doctorsCount;
+    private javax.swing.JButton jButton1;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel lateral;
     private javax.swing.JButton openButton;
