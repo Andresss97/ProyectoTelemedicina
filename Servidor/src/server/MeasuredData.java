@@ -33,5 +33,4 @@ public class MeasuredData implements Serializable{
         return ("User Name: " + userName + "\n Date & Time: " + dateTime
                 + "\nEMG Data : " + EMGData + "\nECG Data: " + ECGData);
     }
-
 }

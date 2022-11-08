@@ -1,4 +1,4 @@
-package client;
+package server;
 
 import java.util.Vector;
 import java.util.logging.Level;

@@ -1,4 +1,4 @@
-package client;
+package server;
 
 public class BITalinoException extends java.lang.Exception {
 

@@ -37,11 +37,11 @@ public class Server {
                 objectIS = new ObjectInputStream(is);
                 //boolean Object;
                 Object tmp;
-                while ((tmp = objectIS.readObject()) != null) {
+                tmp = objectIS.readObject();
                     System.out.println("I arrived safely");
                     MeasuredData dataPatient = (MeasuredData) tmp;
                     System.out.println(dataPatient.toString());
-                }
+                
                 sc.close();
                 System.out.println("Disconnected patient, ready to receive more patients");
 

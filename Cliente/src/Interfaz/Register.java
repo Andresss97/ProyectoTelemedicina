@@ -4,17 +4,25 @@
  */
 package Interfaz;
 
+import conexion.Client;
+import java.io.IOException;
+import java.net.Socket;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import pojos.Patient;
+
 /**
  *
  * @author andre
  */
 public class Register extends javax.swing.JPanel {
-
+    public static Client client;
     /**
      * Creates new form Register
      */
     public Register() {
         initComponents();
+        
     }
 
     /**
@@ -81,6 +89,21 @@ public class Register extends javax.swing.JPanel {
     }// </editor-fold>//GEN-END:initComponents
 
     private void registerButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_registerButtonActionPerformed
+        String username = this.username.getText();
+        String password = this.password.getText();
+        
+        Patient patient = new Patient();
+        patient.setUsername(username);
+        patient.setPassword(password);
+        
+        try {
+            Socket socket = new Socket("loopback", 6000);
+            client = new Client(socket);
+            client.registerPatient(patient);
+            
+        } catch (IOException ex) {
+            Logger.getLogger(Register.class.getName()).log(Level.SEVERE, null, ex);
+        }
         
     }//GEN-LAST:event_registerButtonActionPerformed
 

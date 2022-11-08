@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package client;
+package server;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -34,5 +34,4 @@ public class MeasuredData implements Serializable {
         return ("User Name: " + userName + "\n Date & Time: " + dateTime
                 + "\nEMG Data : " + EMGData + "\nECG Data: " + ECGData);
     }
-
 }

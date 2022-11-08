@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package client;
+package server;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -32,7 +32,7 @@ public class Client {
         ArrayList<ArrayList<Integer>> analogData = new ArrayList<ArrayList<Integer>>();
 
         try {
-            bitalino = new client.BITalino();
+            bitalino = new server.BITalino();
             // find devices
             //Only works on some OS
             Vector<RemoteDevice> devices = bitalino.findDevices();
@@ -64,16 +64,16 @@ public class Client {
             }
             //stop acquisition
             bitalino.stop();
-        } catch (client.BITalinoException ex) {
-            Logger.getLogger(client.BitalinoDemo.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (server.BITalinoException ex) {
+            Logger.getLogger(server.BitalinoDemo.class.getName()).log(Level.SEVERE, null, ex);
         } finally {
             try {
                 //close bluetooth connection
                 if (bitalino != null) {
                     bitalino.close();
                 }
-            } catch (client.BITalinoException ex) {
-                Logger.getLogger(client.BitalinoDemo.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (server.BITalinoException ex) {
+                Logger.getLogger(server.BitalinoDemo.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
         analogData.add(analogEMGData);

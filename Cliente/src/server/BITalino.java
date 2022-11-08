@@ -35,7 +35,7 @@
  * - click on the test.java file with the right button of your mouse and select the “Run ‘test.main()’”.
  *
  */
-package client;
+package server;
 
 import java.io.DataInputStream;
 import java.io.DataOutputStream;

@@ -1,4 +1,4 @@
-package client;
+package server;
 
 /// A frame returned by BITalino.read()
 public class Frame {
