@@ -129,7 +129,7 @@ public class Client {
         String confirm = select();
         if ("Y".equals(confirm)) {
             System.out.println("Proceeding to read data from BITalino");
-            ArrayList<ArrayList<Integer>> analogData = readData();
+            /*ArrayList<ArrayList<Integer>> analogData = readData();
             //Hay que coger el username
             //Se podrían convertir todos los datos a una clase y enviarlos como un objeto
 
@@ -141,7 +141,10 @@ public class Client {
             for (int i = 0; i < analogData.get(1).size(); i++) {
                 ECGData.add(analogData.get(1).get(i));
             }
+*/
             Date dateTime = new Date();
+            EMGData.add(12);
+            ECGData.add(11);
             MeasuredData toSendData = new MeasuredData(userName, dateTime, EMGData, ECGData);
             System.out.println(toSendData.toString());
             try {

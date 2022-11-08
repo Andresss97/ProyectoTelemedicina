@@ -12,7 +12,7 @@ import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-
+import java.lang.Object;
 /**
  *
  * @author Teresa Romero
@@ -35,10 +35,11 @@ public class Server {
                 is = sc.getInputStream();
 
                 objectIS = new ObjectInputStream(is);
-                //Object tmp;
-                while (objectIS.readObject() != null) {
+                //boolean Object;
+                Object tmp;
+                while ((tmp = objectIS.readObject()) != null) {
                     System.out.println("I arrived safely");
-                    MeasuredData dataPatient = (MeasuredData) objectIS.readObject();
+                    MeasuredData dataPatient = (MeasuredData) tmp;
                     System.out.println(dataPatient.toString());
                 }
                 sc.close();

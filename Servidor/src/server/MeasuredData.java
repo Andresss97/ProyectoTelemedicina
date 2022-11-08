@@ -5,7 +5,7 @@
  */
 package server;
 
-//import java.io.Serializable;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Date;
 
@@ -13,9 +13,9 @@ import java.util.Date;
  *
  * @author Teresa Romero
  */
-public class MeasuredData {
+public class MeasuredData implements Serializable{
 
-    //private static final long serialVersionUID = 10L;
+    private static final long serialVersionUID = 10L;
     public ArrayList<Integer> EMGData = new ArrayList<Integer>();
     public ArrayList<Integer> ECGData = new ArrayList<Integer>();
     public final String userName;
