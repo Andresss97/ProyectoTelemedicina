@@ -6,12 +6,13 @@
 package client;
 
 import java.io.BufferedReader;
-import java.io.DataInputStream;
-import java.io.DataOutputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.io.ObjectOutputStream;
+import java.io.OutputStream;
 import java.net.Socket;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.Vector;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -48,7 +49,7 @@ public class Client {
             bitalino.start(channelsToAcquire);
 
             //read 10000 samples
-            for (int j = 0; j < 100; j++) {
+            for (int j = 0; j < 5; j++) {
 
                 //Read a block of 100 samples
                 frame = bitalino.read(10);
@@ -93,14 +94,9 @@ public class Client {
         return confirm;
     }
 
-    private static void releaseResources(DataInputStream in, DataOutputStream out, Socket socket) {
+    private static void releaseResources(ObjectOutputStream objectOS, Socket socket) {
         try {
-            in.close();
-        } catch (IOException ex) {
-            Logger.getLogger(Client.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        try {
-            out.close();
+            objectOS.close();
         } catch (IOException ex) {
             Logger.getLogger(Client.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -116,42 +112,52 @@ public class Client {
         final String HOST = "127.0.0.1";//loopback
         final int PUERTO = 6000;
         String userName = "username";
-        DataInputStream in;
-        DataOutputStream out;
+        OutputStream os = null;
+        ObjectOutputStream objectOS = null;
+        Socket sc = null;
+        ArrayList<Integer> EMGData = new ArrayList<Integer>();
+        ArrayList<Integer> ECGData = new ArrayList<Integer>();
+
         try {
-            Socket sc = new Socket(HOST, PUERTO);
-            in = new DataInputStream(sc.getInputStream());
-            out = new DataOutputStream(sc.getOutputStream());
-
-            //Ready to receive data
-            String message = in.readUTF();
-            System.out.println(message);
-
-            String confirm = select();
-            if ("Y".equals(confirm)) {
-                System.out.println("Proceeding to read data from BITalino");
-                ArrayList<ArrayList<Integer>> analogData = readData();
-                //Hay que coger el username
-                //Se podrían convertir todos los datos a una clase y enviarlos como un objeto
-                out.writeUTF(userName);
-                out.writeUTF(new java.util.Date().toString());
-                out.writeLong(analogData.get(0).size());
-                //Get EMG data and send to server
-                for (int i = 0; i < analogData.get(0).size(); i++) {
-                    out.writeInt(analogData.get(0).get(i));
-                }
-                //Get ECG data and send to server
-                out.writeLong(analogData.get(1).size());
-                for (int i = 0; i < analogData.get(1).size(); i++) {
-                    out.writeInt(analogData.get(1).get(i));
-                }
-            } else {
-                releaseResources(in, out, sc);
-            }
-            releaseResources(in, out, sc);
-
+            sc = new Socket(HOST, PUERTO);
+            os = sc.getOutputStream();
         } catch (IOException ex) {
+            System.out.println("No connection stablished");
+            System.exit(-1);
             Logger.getLogger(Client.class.getName()).log(Level.SEVERE, null, ex);
         }
+        String confirm = select();
+        if ("Y".equals(confirm)) {
+            System.out.println("Proceeding to read data from BITalino");
+            ArrayList<ArrayList<Integer>> analogData = readData();
+            //Hay que coger el username
+            //Se podrían convertir todos los datos a una clase y enviarlos como un objeto
+
+            //Get EMG data
+            for (int i = 0; i < analogData.get(0).size(); i++) {
+                EMGData.add(analogData.get(0).get(i));
+            }
+            //Get ECG data
+            for (int i = 0; i < analogData.get(1).size(); i++) {
+                ECGData.add(analogData.get(1).get(i));
+            }
+            Date dateTime = new Date();
+            MeasuredData toSendData = new MeasuredData(userName, dateTime, EMGData, ECGData);
+            System.out.println(toSendData.toString());
+            try {
+                objectOS = new ObjectOutputStream(os);
+                objectOS.writeObject(toSendData);
+                objectOS.flush();
+            } catch (IOException ex) {
+                System.out.println("No object sent");
+                Logger.getLogger(Client.class.getName()).log(Level.SEVERE, null, ex);
+            } finally {
+                releaseResources(objectOS, sc);
+            }
+
+        } else {
+            releaseResources(objectOS, sc);
+        }
     }
+
 }
