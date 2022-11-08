@@ -27,6 +27,7 @@ public class HomeServer extends javax.swing.JFrame {
     
     public static ConnInterface conector;
     private ServerSocket socket;
+    private JPanel panelCentral;
     /**
      * Creates new form HomeServer
      */
@@ -50,6 +51,7 @@ public class HomeServer extends javax.swing.JFrame {
         
         initComponents();
         this.bar.setVisible(false);
+        this.panelCentral = central;
     }
 
     /**
@@ -71,7 +73,8 @@ public class HomeServer extends javax.swing.JFrame {
         password = new javax.swing.JPasswordField();
         bar = new javax.swing.JMenuBar();
         jMenu1 = new javax.swing.JMenu();
-        jMenu2 = new javax.swing.JMenu();
+        homeButton = new javax.swing.JMenuItem();
+        signOffButton = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setResizable(false);
@@ -133,11 +136,25 @@ public class HomeServer extends javax.swing.JFrame {
 
         getContentPane().add(container, java.awt.BorderLayout.PAGE_START);
 
-        jMenu1.setText("File");
-        bar.add(jMenu1);
+        jMenu1.setText("Log");
 
-        jMenu2.setText("Edit");
-        bar.add(jMenu2);
+        homeButton.setText("Home");
+        homeButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                homeButtonActionPerformed(evt);
+            }
+        });
+        jMenu1.add(homeButton);
+
+        signOffButton.setText("SignOff");
+        signOffButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                signOffButtonActionPerformed(evt);
+            }
+        });
+        jMenu1.add(signOffButton);
+
+        bar.add(jMenu1);
 
         setJMenuBar(bar);
 
@@ -157,6 +174,8 @@ public class HomeServer extends javax.swing.JFrame {
                 this.container.removeAll();
                 this.container.repaint();
                 
+                this.username.setText("");
+                this.password.setText("");
                 JPanel panelView = new AdminMainView();
                 this.container.add(panelView,BorderLayout.CENTER);
                 panelView.setVisible(true);
@@ -171,6 +190,28 @@ public class HomeServer extends javax.swing.JFrame {
         }
         
     }//GEN-LAST:event_signInButtonActionPerformed
+
+    private void homeButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_homeButtonActionPerformed
+        // TODO add your handling code here:
+        this.container.removeAll();
+        this.container.repaint();
+
+        JPanel panelView = new AdminMainView();
+        this.container.add(panelView, BorderLayout.CENTER);
+        panelView.setVisible(true);
+        pack();
+    }//GEN-LAST:event_homeButtonActionPerformed
+
+    private void signOffButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_signOffButtonActionPerformed
+        // TODO add your handling code here:
+        this.container.removeAll();
+        this.container.repaint();
+
+        this.container.add(this.panelCentral, BorderLayout.CENTER);
+        this.panelCentral.setVisible(true);
+        this.bar.setVisible(false);
+        pack();
+    }//GEN-LAST:event_signOffButtonActionPerformed
     
     private void initSocket() {
         try {
@@ -224,13 +265,14 @@ public class HomeServer extends javax.swing.JFrame {
     private javax.swing.JMenuBar bar;
     private javax.swing.JPanel central;
     private javax.swing.JPanel container;
+    private javax.swing.JMenuItem homeButton;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JMenu jMenu1;
-    private javax.swing.JMenu jMenu2;
     private javax.swing.JPasswordField password;
     private javax.swing.JButton signInButton;
+    private javax.swing.JMenuItem signOffButton;
     private javax.swing.JTextField username;
     // End of variables declaration//GEN-END:variables
 }
