@@ -4,7 +4,11 @@
  */
 package Interfaz;
 
+import creation.QuerysInsert;
 import java.awt.BorderLayout;
+import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.*;
 
 /**
@@ -16,8 +20,16 @@ public class AdminMainView extends javax.swing.JPanel {
     /**
      * Creates new form AdminMainView
      */
+
     public AdminMainView() {
-        initComponents();
+       initComponents();
+       this.openSocketButton.setEnabled(false);
+       this.userLabel.setVisible(false);
+       this.passwordLabel.setVisible(false);
+       this.username.setVisible(false);
+       this.password.setVisible(false);
+       this.buttonRegister.setVisible(false);
+       
     }
 
     /**
@@ -29,97 +41,100 @@ public class AdminMainView extends javax.swing.JPanel {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        leftPanel = new javax.swing.JPanel();
+        doctorsLabel = new javax.swing.JLabel();
+        patientsLabel = new javax.swing.JLabel();
         container = new javax.swing.JPanel();
-        panelDown = new javax.swing.JPanel();
-        closeButton = new javax.swing.JButton();
-        openButton = new javax.swing.JButton();
-        lateral = new javax.swing.JPanel();
-        patientsCount = new javax.swing.JLabel();
-        doctorsCount = new javax.swing.JLabel();
-        homeButton = new javax.swing.JButton();
-        panelLateralDer = new javax.swing.JPanel();
+        userLabel = new javax.swing.JLabel();
+        username = new javax.swing.JTextField();
+        passwordLabel = new javax.swing.JLabel();
+        password = new javax.swing.JPasswordField();
+        buttonRegister = new javax.swing.JButton();
+        rightPanel = new javax.swing.JPanel();
+        refreshButton = new javax.swing.JButton();
         createDoctorButton = new javax.swing.JButton();
-        refeshButton = new javax.swing.JButton();
-        central = new javax.swing.JPanel();
+        bottomPanel = new javax.swing.JPanel();
+        openSocketButton = new javax.swing.JButton();
+        closeSocketButton = new javax.swing.JButton();
 
-        setPreferredSize(new java.awt.Dimension(561, 371));
+        setPreferredSize(new java.awt.Dimension(557, 354));
         setLayout(new java.awt.BorderLayout());
 
-        container.setLayout(new java.awt.BorderLayout());
+        doctorsLabel.setText("jLabel1");
 
-        closeButton.setText("Close socket");
-        closeButton.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                closeButtonActionPerformed(evt);
-            }
-        });
+        patientsLabel.setText("jLabel1");
 
-        openButton.setText("Open socket");
-        openButton.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                openButtonActionPerformed(evt);
-            }
-        });
-
-        javax.swing.GroupLayout panelDownLayout = new javax.swing.GroupLayout(panelDown);
-        panelDown.setLayout(panelDownLayout);
-        panelDownLayout.setHorizontalGroup(
-            panelDownLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelDownLayout.createSequentialGroup()
-                .addContainerGap(178, Short.MAX_VALUE)
-                .addComponent(openButton, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
+        javax.swing.GroupLayout leftPanelLayout = new javax.swing.GroupLayout(leftPanel);
+        leftPanel.setLayout(leftPanelLayout);
+        leftPanelLayout.setHorizontalGroup(
+            leftPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(leftPanelLayout.createSequentialGroup()
+                .addGap(30, 30, 30)
+                .addGroup(leftPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(doctorsLabel)
+                    .addComponent(patientsLabel))
+                .addContainerGap(33, Short.MAX_VALUE))
+        );
+        leftPanelLayout.setVerticalGroup(
+            leftPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(leftPanelLayout.createSequentialGroup()
+                .addGap(39, 39, 39)
+                .addComponent(doctorsLabel)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(closeButton, javax.swing.GroupLayout.PREFERRED_SIZE, 106, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(151, 151, 151))
-        );
-        panelDownLayout.setVerticalGroup(
-            panelDownLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelDownLayout.createSequentialGroup()
-                .addContainerGap(47, Short.MAX_VALUE)
-                .addGroup(panelDownLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(closeButton)
-                    .addComponent(openButton))
-                .addGap(25, 25, 25))
+                .addComponent(patientsLabel)
+                .addContainerGap(242, Short.MAX_VALUE))
         );
 
-        container.add(panelDown, java.awt.BorderLayout.PAGE_END);
+        add(leftPanel, java.awt.BorderLayout.LINE_START);
 
-        patientsCount.setText("patients");
+        userLabel.setText("User:");
 
-        doctorsCount.setText("doctors");
+        passwordLabel.setText("Password:");
 
-        homeButton.setText("Home");
-        homeButton.addActionListener(new java.awt.event.ActionListener() {
+        buttonRegister.setText("Register");
+        buttonRegister.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                homeButtonActionPerformed(evt);
+                buttonRegisterActionPerformed(evt);
             }
         });
 
-        javax.swing.GroupLayout lateralLayout = new javax.swing.GroupLayout(lateral);
-        lateral.setLayout(lateralLayout);
-        lateralLayout.setHorizontalGroup(
-            lateralLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(lateralLayout.createSequentialGroup()
-                .addGap(12, 12, 12)
-                .addGroup(lateralLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(doctorsCount)
-                    .addComponent(patientsCount))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-            .addComponent(homeButton, javax.swing.GroupLayout.DEFAULT_SIZE, 74, Short.MAX_VALUE)
+        javax.swing.GroupLayout containerLayout = new javax.swing.GroupLayout(container);
+        container.setLayout(containerLayout);
+        containerLayout.setHorizontalGroup(
+            containerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, containerLayout.createSequentialGroup()
+                .addContainerGap(80, Short.MAX_VALUE)
+                .addGroup(containerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(buttonRegister)
+                    .addGroup(containerLayout.createSequentialGroup()
+                        .addGroup(containerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(userLabel)
+                            .addComponent(passwordLabel))
+                        .addGap(18, 18, 18)
+                        .addGroup(containerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(username)
+                            .addComponent(password, javax.swing.GroupLayout.PREFERRED_SIZE, 113, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                .addGap(78, 78, 78))
         );
-        lateralLayout.setVerticalGroup(
-            lateralLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(lateralLayout.createSequentialGroup()
-                .addGap(21, 21, 21)
-                .addComponent(homeButton)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(patientsCount)
-                .addGap(18, 18, 18)
-                .addComponent(doctorsCount)
-                .addContainerGap(166, Short.MAX_VALUE))
+        containerLayout.setVerticalGroup(
+            containerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(containerLayout.createSequentialGroup()
+                .addGap(115, 115, 115)
+                .addGroup(containerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(userLabel)
+                    .addComponent(username, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(containerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(passwordLabel)
+                    .addComponent(password, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(buttonRegister)
+                .addContainerGap(113, Short.MAX_VALUE))
         );
 
-        container.add(lateral, java.awt.BorderLayout.LINE_START);
+        add(container, java.awt.BorderLayout.CENTER);
+
+        refreshButton.setText("Refresh");
 
         createDoctorButton.setText("Create Doctor");
         createDoctorButton.addActionListener(new java.awt.event.ActionListener() {
@@ -128,84 +143,104 @@ public class AdminMainView extends javax.swing.JPanel {
             }
         });
 
-        refeshButton.setText("Refresh");
-        refeshButton.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                refeshButtonActionPerformed(evt);
-            }
-        });
-
-        javax.swing.GroupLayout panelLateralDerLayout = new javax.swing.GroupLayout(panelLateralDer);
-        panelLateralDer.setLayout(panelLateralDerLayout);
-        panelLateralDerLayout.setHorizontalGroup(
-            panelLateralDerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(panelLateralDerLayout.createSequentialGroup()
+        javax.swing.GroupLayout rightPanelLayout = new javax.swing.GroupLayout(rightPanel);
+        rightPanel.setLayout(rightPanelLayout);
+        rightPanelLayout.setHorizontalGroup(
+            rightPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(rightPanelLayout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(panelLateralDerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(createDoctorButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(refeshButton, javax.swing.GroupLayout.PREFERRED_SIZE, 104, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGroup(rightPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(refreshButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(createDoctorButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap())
         );
-        panelLateralDerLayout.setVerticalGroup(
-            panelLateralDerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(panelLateralDerLayout.createSequentialGroup()
-                .addGap(19, 19, 19)
-                .addComponent(refeshButton)
+        rightPanelLayout.setVerticalGroup(
+            rightPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(rightPanelLayout.createSequentialGroup()
+                .addGap(29, 29, 29)
+                .addComponent(refreshButton)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(createDoctorButton)
-                .addContainerGap(190, Short.MAX_VALUE))
+                .addContainerGap(238, Short.MAX_VALUE))
         );
 
-        container.add(panelLateralDer, java.awt.BorderLayout.LINE_END);
+        add(rightPanel, java.awt.BorderLayout.LINE_END);
 
-        central.setLayout(new java.awt.BorderLayout());
-        container.add(central, java.awt.BorderLayout.CENTER);
+        openSocketButton.setText("Open Socket");
 
-        add(container, java.awt.BorderLayout.CENTER);
+        closeSocketButton.setText("Close Socket");
+
+        javax.swing.GroupLayout bottomPanelLayout = new javax.swing.GroupLayout(bottomPanel);
+        bottomPanel.setLayout(bottomPanelLayout);
+        bottomPanelLayout.setHorizontalGroup(
+            bottomPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(bottomPanelLayout.createSequentialGroup()
+                .addGap(180, 180, 180)
+                .addComponent(openSocketButton)
+                .addGap(41, 41, 41)
+                .addComponent(closeSocketButton)
+                .addContainerGap(142, Short.MAX_VALUE))
+        );
+        bottomPanelLayout.setVerticalGroup(
+            bottomPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(bottomPanelLayout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(bottomPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(openSocketButton)
+                    .addComponent(closeSocketButton))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+
+        add(bottomPanel, java.awt.BorderLayout.PAGE_END);
 
         getAccessibleContext().setAccessibleName("");
     }// </editor-fold>//GEN-END:initComponents
 
-    private void openButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_openButtonActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_openButtonActionPerformed
-
-    private void closeButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_closeButtonActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_closeButtonActionPerformed
-
-    private void refeshButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_refeshButtonActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_refeshButtonActionPerformed
-
-    private void homeButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_homeButtonActionPerformed
-
-    }//GEN-LAST:event_homeButtonActionPerformed
-
     private void createDoctorButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_createDoctorButtonActionPerformed
-        // TODO add your handling code here:
-        this.central.removeAll();
-        this.central.repaint();
-        
-        JPanel panel = new CreateDoctorView();
-        this.central.add(panel,BorderLayout.CENTER);
-        panel.setVisible(true);
-       
+       this.userLabel.setVisible(true);
+       this.passwordLabel.setVisible(true);
+       this.username.setVisible(true);
+       this.password.setVisible(true);
+       this.buttonRegister.setVisible(true);
     }//GEN-LAST:event_createDoctorButtonActionPerformed
+
+    private void buttonRegisterActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonRegisterActionPerformed
+        // TODO add your handling code here:
+        QuerysInsert qi = new QuerysInsert();
+        try {
+            qi.insertDoctor(this.username.getText(), this.password.getText());
+            qi.insertUserType(this.username.getText(), this.password.getText(),2);
+            
+            JOptionPane.showMessageDialog(this, "Doctor registered correctly", "Information", JOptionPane.INFORMATION_MESSAGE);
+        } catch (SQLException ex) {
+            Logger.getLogger(AdminMainView.class.getName()).log(Level.SEVERE, null, ex);
+        }
+       this.username.setText("");
+       this.password.setText("");
+       
+       this.userLabel.setVisible(false);
+       this.passwordLabel.setVisible(false);
+       this.username.setVisible(false);
+       this.password.setVisible(false);
+       this.buttonRegister.setVisible(false);
+    }//GEN-LAST:event_buttonRegisterActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JPanel central;
-    private javax.swing.JButton closeButton;
+    private javax.swing.JPanel bottomPanel;
+    private javax.swing.JButton buttonRegister;
+    private javax.swing.JButton closeSocketButton;
     private javax.swing.JPanel container;
     private javax.swing.JButton createDoctorButton;
-    private javax.swing.JLabel doctorsCount;
-    private javax.swing.JButton homeButton;
-    private javax.swing.JPanel lateral;
-    private javax.swing.JButton openButton;
-    private javax.swing.JPanel panelDown;
-    private javax.swing.JPanel panelLateralDer;
-    private javax.swing.JLabel patientsCount;
-    private javax.swing.JButton refeshButton;
+    private javax.swing.JLabel doctorsLabel;
+    private javax.swing.JPanel leftPanel;
+    private javax.swing.JButton openSocketButton;
+    private javax.swing.JPasswordField password;
+    private javax.swing.JLabel passwordLabel;
+    private javax.swing.JLabel patientsLabel;
+    private javax.swing.JButton refreshButton;
+    private javax.swing.JPanel rightPanel;
+    private javax.swing.JLabel userLabel;
+    private javax.swing.JTextField username;
     // End of variables declaration//GEN-END:variables
 }

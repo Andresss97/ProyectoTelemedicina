@@ -16,6 +16,7 @@ import java.net.ServerSocket;
 import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JFrame;
 import javax.swing.JPanel;
 
 /**
@@ -48,6 +49,7 @@ public class HomeServer extends javax.swing.JFrame {
         }).start();
         
         initComponents();
+        this.bar.setVisible(false);
     }
 
     /**
@@ -67,6 +69,9 @@ public class HomeServer extends javax.swing.JFrame {
         jLabel3 = new javax.swing.JLabel();
         signInButton = new javax.swing.JButton();
         password = new javax.swing.JPasswordField();
+        bar = new javax.swing.JMenuBar();
+        jMenu1 = new javax.swing.JMenu();
+        jMenu2 = new javax.swing.JMenu();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setResizable(false);
@@ -128,6 +133,14 @@ public class HomeServer extends javax.swing.JFrame {
 
         getContentPane().add(container, java.awt.BorderLayout.PAGE_START);
 
+        jMenu1.setText("File");
+        bar.add(jMenu1);
+
+        jMenu2.setText("Edit");
+        bar.add(jMenu2);
+
+        setJMenuBar(bar);
+
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
@@ -147,6 +160,7 @@ public class HomeServer extends javax.swing.JFrame {
                 JPanel panelView = new AdminMainView();
                 this.container.add(panelView,BorderLayout.CENTER);
                 panelView.setVisible(true);
+                this.bar.setVisible(true);
                 pack();
             }
             else {
@@ -167,6 +181,9 @@ public class HomeServer extends javax.swing.JFrame {
             Logger.getLogger(HomeServer.class.getName()).log(Level.SEVERE, null, ex);
         }
         
+    }
+    public JPanel getCentral() {
+        return container;
     }
     /**
      * @param args the command line arguments
@@ -204,11 +221,14 @@ public class HomeServer extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JMenuBar bar;
     private javax.swing.JPanel central;
     private javax.swing.JPanel container;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
+    private javax.swing.JMenu jMenu1;
+    private javax.swing.JMenu jMenu2;
     private javax.swing.JPasswordField password;
     private javax.swing.JButton signInButton;
     private javax.swing.JTextField username;
