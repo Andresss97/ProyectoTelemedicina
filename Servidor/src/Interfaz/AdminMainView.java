@@ -166,9 +166,9 @@ public class AdminMainView extends javax.swing.JPanel {
 
         add(rightPanel, java.awt.BorderLayout.LINE_END);
 
-        openSocketButton.setText("Open Socket");
+        openSocketButton.setText("Open server");
 
-        closeSocketButton.setText("Close Socket");
+        closeSocketButton.setText("Close server");
 
         javax.swing.GroupLayout bottomPanelLayout = new javax.swing.GroupLayout(bottomPanel);
         bottomPanel.setLayout(bottomPanelLayout);
@@ -179,7 +179,7 @@ public class AdminMainView extends javax.swing.JPanel {
                 .addComponent(openSocketButton)
                 .addGap(41, 41, 41)
                 .addComponent(closeSocketButton)
-                .addContainerGap(142, Short.MAX_VALUE))
+                .addContainerGap(143, Short.MAX_VALUE))
         );
         bottomPanelLayout.setVerticalGroup(
             bottomPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -213,7 +213,7 @@ public class AdminMainView extends javax.swing.JPanel {
             
             JOptionPane.showMessageDialog(this, "Doctor registered correctly", "Information", JOptionPane.INFORMATION_MESSAGE);
         } catch (SQLException ex) {
-            Logger.getLogger(AdminMainView.class.getName()).log(Level.SEVERE, null, ex);
+            JOptionPane.showMessageDialog(this, "You have to use a different username", "Error", JOptionPane.ERROR_MESSAGE);
         }
        this.username.setText("");
        this.password.setText("");

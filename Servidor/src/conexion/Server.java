@@ -14,7 +14,7 @@ import java.net.Socket;
  */
 public class Server {
     private ServerSocket serverSocket;
-    
+    private final int PUERTO = 6000;
     public Server(ServerSocket serverSocket) {
         this.serverSocket = serverSocket;
     }

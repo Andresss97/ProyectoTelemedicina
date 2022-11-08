@@ -207,7 +207,7 @@
                   <Component id="openSocketButton" min="-2" max="-2" attributes="0"/>
                   <EmptySpace min="-2" pref="41" max="-2" attributes="0"/>
                   <Component id="closeSocketButton" min="-2" max="-2" attributes="0"/>
-                  <EmptySpace pref="142" max="32767" attributes="0"/>
+                  <EmptySpace pref="143" max="32767" attributes="0"/>
               </Group>
           </Group>
         </DimensionLayout>
@@ -227,12 +227,12 @@
       <SubComponents>
         <Component class="javax.swing.JButton" name="openSocketButton">
           <Properties>
-            <Property name="text" type="java.lang.String" value="Open Socket"/>
+            <Property name="text" type="java.lang.String" value="Open server"/>
           </Properties>
         </Component>
         <Component class="javax.swing.JButton" name="closeSocketButton">
           <Properties>
-            <Property name="text" type="java.lang.String" value="Close Socket"/>
+            <Property name="text" type="java.lang.String" value="Close server"/>
           </Properties>
         </Component>
       </SubComponents>
