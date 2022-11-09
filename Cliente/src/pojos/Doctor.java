@@ -17,11 +17,38 @@ public class Doctor implements Serializable{
 	private String eMail;
 	private String specialty;
 	private Double salary;
-
+        private String username;
+        private String password;
+        
 	public Doctor() {
 		super();
 	}
 
+    public String getSpecialty() {
+        return specialty;
+    }
+
+    public void setSpecialty(String specialty) {
+        this.specialty = specialty;
+    }
+
+    public String getUsername() {
+        return username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+        
+        
 	public Doctor(Integer id, String name, String address, Date dob, Integer phoneNumber, String eMail,
 			String speciality, Double salary) {
 		super();

@@ -4,18 +4,28 @@
  */
 package Interfaz;
 
+import conexion.Client;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.IOException;
+import java.net.Socket;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.GroupLayout;
 import javax.swing.JButton;
 import javax.swing.JLabel;
+import javax.swing.JMenu;
+import javax.swing.JMenuBar;
+import javax.swing.JMenuItem;
 import javax.swing.JPanel;
 import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 import javax.swing.LayoutStyle;
 import javax.swing.WindowConstants;
+import pojos.Doctor;
+import pojos.Patient;
 
 /**
  *
@@ -26,9 +36,18 @@ public class HomeClients extends javax.swing.JFrame {
     /**
      * Creates new form HomeClients
      */
+    public static Client client;
+    public static boolean doctorsView;
+    public static boolean patientsView;
+    public static Patient p;
+    public static Doctor d;
+    
     public HomeClients() {
         initComponents();
         this.setTitle("Telemedicine - Clients");
+        this.bar.setVisible(false);
+        this.doctorsView = false;
+        this.patientsView = false;
     }
 
     /**
@@ -49,6 +68,10 @@ public class HomeClients extends javax.swing.JFrame {
         signInButton = new JButton();
         recoverPasswordLabel = new JLabel();
         registerButton = new JButton();
+        bar = new JMenuBar();
+        log = new JMenu();
+        homeButton = new JMenuItem();
+        signOffButton = new JMenuItem();
 
         setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         setBackground(Color.white);
@@ -128,6 +151,28 @@ public class HomeClients extends javax.swing.JFrame {
 
         getContentPane().add(container, BorderLayout.PAGE_START);
 
+        log.setText("Log");
+
+        homeButton.setText("Home");
+        homeButton.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent evt) {
+                homeButtonActionPerformed(evt);
+            }
+        });
+        log.add(homeButton);
+
+        signOffButton.setText("Sign off");
+        signOffButton.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent evt) {
+                signOffButtonActionPerformed(evt);
+            }
+        });
+        log.add(signOffButton);
+
+        bar.add(log);
+
+        setJMenuBar(bar);
+
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
@@ -135,20 +180,71 @@ public class HomeClients extends javax.swing.JFrame {
         String uName = this.username.getText();
         String pWord = this.password.getText();
         
-        
+        try {
+            Socket socket = new Socket("localhost", 6000);
+            client = new Client(socket);
+            String[] data = new String[2];
+            data[0] = uName;
+            data[1] = pWord;
+            
+            client.registerUser(data);
+            
+            if(patientsView == true) {
+                this.container.removeAll();
+                this.container.repaint();
+                
+                JPanel panel =  new PatientsView();
+                this.container.add(panel, BorderLayout.CENTER);
+                this.bar.setVisible(true);
+                panel.setVisible(true);
+                pack();
+            }
+            else if(doctorsView == true) {
+                this.container.removeAll();
+                this.container.repaint();
+                
+                JPanel panel =  new DoctorsView();
+                this.container.add(panel, BorderLayout.CENTER);
+                this.bar.setVisible(true);
+                panel.setVisible(true);
+                pack();
+            }
+        } catch (IOException ex) {
+            Logger.getLogger(HomeClients.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }//GEN-LAST:event_signInButtonActionPerformed
 
     private void registerButtonActionPerformed(ActionEvent evt) {//GEN-FIRST:event_registerButtonActionPerformed
         this.container.removeAll();
         this.container.repaint();
         
-        JPanel registerView = new Register();
+        JPanel registerView = new Register(this);
         this.container.add(registerView, BorderLayout.CENTER);
         registerView.setVisible(true);
         
         pack();
     }//GEN-LAST:event_registerButtonActionPerformed
 
+    private void homeButtonActionPerformed(ActionEvent evt) {//GEN-FIRST:event_homeButtonActionPerformed
+        // TODO add your handling code here:
+        
+    }//GEN-LAST:event_homeButtonActionPerformed
+
+    private void signOffButtonActionPerformed(ActionEvent evt) {//GEN-FIRST:event_signOffButtonActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_signOffButtonActionPerformed
+    
+    public void setPatient() {
+         this.container.removeAll();
+         this.container.repaint();
+                
+         JPanel panel =  new PatientsView();
+         this.container.add(panel, BorderLayout.CENTER);
+         this.bar.setVisible(true);
+         panel.setVisible(true);
+         pack();
+    }
+    
     /**
      * @param args the command line arguments
      */
@@ -183,15 +279,21 @@ public class HomeClients extends javax.swing.JFrame {
             }
         });
     }
+    
+    
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private JMenuBar bar;
     private JPanel central;
     private JPanel container;
+    private JMenuItem homeButton;
+    private JMenu log;
     private JPasswordField password;
     private JLabel passwordLabel;
     private JLabel recoverPasswordLabel;
     private JButton registerButton;
     private JButton signInButton;
+    private JMenuItem signOffButton;
     private JLabel userLabel;
     private JTextField username;
     // End of variables declaration//GEN-END:variables

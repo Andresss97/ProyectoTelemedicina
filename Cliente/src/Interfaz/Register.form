@@ -67,7 +67,13 @@
         <Property name="text" type="java.lang.String" value="User:"/>
       </Properties>
     </Component>
-    <Component class="javax.swing.JTextField" name="username">
+    <Component class="javax.swing.JButton" name="registerButton">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Register"/>
+      </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="registerButtonActionPerformed"/>
+      </Events>
     </Component>
     <Component class="javax.swing.JLabel" name="passwordLabel">
       <Properties>
@@ -76,13 +82,7 @@
     </Component>
     <Component class="javax.swing.JPasswordField" name="password">
     </Component>
-    <Component class="javax.swing.JButton" name="registerButton">
-      <Properties>
-        <Property name="text" type="java.lang.String" value="Register"/>
-      </Properties>
-      <Events>
-        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="registerButtonActionPerformed"/>
-      </Events>
+    <Component class="javax.swing.JTextField" name="username">
     </Component>
   </SubComponents>
 </Form>

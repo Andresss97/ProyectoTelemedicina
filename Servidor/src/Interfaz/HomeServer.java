@@ -28,6 +28,7 @@ public class HomeServer extends javax.swing.JFrame {
     public static ConnInterface conector;
     private ServerSocket socket;
     private JPanel panelCentral;
+    public static Server server;
     /**
      * Creates new form HomeServer
      */
@@ -52,6 +53,7 @@ public class HomeServer extends javax.swing.JFrame {
         initComponents();
         this.bar.setVisible(false);
         this.panelCentral = central;
+        this.setTitle("Telemedicine - Server");
     }
 
     /**

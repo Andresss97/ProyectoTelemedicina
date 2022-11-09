@@ -5,6 +5,7 @@
 package conexion;
 
 import creation.QuerysInsert;
+import creation.QuerysSelect;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
@@ -36,6 +37,7 @@ public class ClientHandler implements Runnable{
             this.socket = socket;
             this.oos = new ObjectOutputStream(this.socket.getOutputStream());
             this.ois = new ObjectInputStream(this.socket.getInputStream());
+            this.clients.add(this);
         }
         catch(Exception ex) {
             
@@ -67,10 +69,12 @@ public class ClientHandler implements Runnable{
                 
                Object tmp;
                QuerysInsert qi = new QuerysInsert();
+               QuerysSelect qs = new QuerysSelect();
                tmp = ois.readObject();
                
                if(tmp instanceof Patient) {
                    patient = (Patient) tmp;
+                   this.patient = patient;
                    qi.insertUserType(patient.getUsername(), patient.getPassword(), 1);
                }
                else if(tmp instanceof MeasuredData) {
@@ -78,8 +82,24 @@ public class ClientHandler implements Runnable{
                     MeasuredData dataPatient = (MeasuredData) tmp;
                     System.out.println(dataPatient.toString());
                }
-
-
+               else if(tmp instanceof String[]){
+                   String []data = (String[]) tmp;
+                   int[] values = qs.selectUser2(data[0], data[1]);
+                   
+                   if(values[0] != 0 && values[1] == 1) {
+                       this.patient = qs.selectPatientByID(values[1]);
+                       this.doctor = null;
+                       System.out.println("Llego aqui paciente");
+                       this.oos.writeObject(this.patient);
+                       
+                   }
+                   else if(values[0] != 0 && values[1] == 2) {
+                       this.patient = null;
+                       this.doctor = qs.selectDoctorByID(values[1]);
+                       System.out.println("Llego aqui doctor");
+                       this.oos.writeObject(this.doctor);
+                   }
+               }
             } catch (IOException ex) {
                 Logger.getLogger(ClientHandler.class.getName()).log(Level.SEVERE, null, ex);
             } catch (ClassNotFoundException ex) {
@@ -89,6 +109,5 @@ public class ClientHandler implements Runnable{
             }
             
         }
-    }
-    
+    }    
 }

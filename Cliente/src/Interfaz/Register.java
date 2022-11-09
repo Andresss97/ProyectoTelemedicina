@@ -9,6 +9,9 @@ import java.io.IOException;
 import java.net.Socket;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JFrame;
+import javax.swing.JMenuBar;
+import javax.swing.JPanel;
 import pojos.Patient;
 
 /**
@@ -16,13 +19,15 @@ import pojos.Patient;
  * @author andre
  */
 public class Register extends javax.swing.JPanel {
-    public static Client client;
+    
     /**
      * Creates new form Register
      */
-    public Register() {
+    private HomeClients container;
+    
+    public Register(HomeClients container) {
         initComponents();
-        
+        this.container = container;
     }
 
     /**
@@ -35,16 +40,14 @@ public class Register extends javax.swing.JPanel {
     private void initComponents() {
 
         userLabel = new javax.swing.JLabel();
-        username = new javax.swing.JTextField();
+        registerButton = new javax.swing.JButton();
         passwordLabel = new javax.swing.JLabel();
         password = new javax.swing.JPasswordField();
-        registerButton = new javax.swing.JButton();
+        username = new javax.swing.JTextField();
 
         setPreferredSize(new java.awt.Dimension(633, 447));
 
         userLabel.setText("User:");
-
-        passwordLabel.setText("Password: ");
 
         registerButton.setText("Register");
         registerButton.addActionListener(new java.awt.event.ActionListener() {
@@ -52,6 +55,8 @@ public class Register extends javax.swing.JPanel {
                 registerButtonActionPerformed(evt);
             }
         });
+
+        passwordLabel.setText("Password: ");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
@@ -98,9 +103,15 @@ public class Register extends javax.swing.JPanel {
         
         try {
             Socket socket = new Socket("loopback", 6000);
-            client = new Client(socket);
-            client.registerPatient(patient);
+            HomeClients.client = new Client(socket);
+            HomeClients.client.registerPatient(patient);
             
+            HomeClients.patientsView = true;
+            HomeClients.p = patient;
+            HomeClients.d = null;
+            
+            this.container.setPatient();
+                
         } catch (IOException ex) {
             Logger.getLogger(Register.class.getName()).log(Level.SEVERE, null, ex);
         }
