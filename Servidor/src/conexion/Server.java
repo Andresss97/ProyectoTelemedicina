@@ -13,41 +13,40 @@ import java.net.Socket;
  * @author andre
  */
 public class Server {
+
     private ServerSocket serverSocket;
     private final int PUERTO = 6000;
-    
+
     public Server(ServerSocket serverSocket) {
         this.serverSocket = serverSocket;
     }
-    
+
     public void startServer() {
-        try  {
-            while(!this.serverSocket.isClosed()) {
+        try {
+            while (!this.serverSocket.isClosed()) {
                 System.out.println("Esperando clientes");
                 Socket socket = this.serverSocket.accept();
                 System.out.println("Se ha conectado un cliente");
-                ClientHandler clientHandler = new ClientHandler(socket);
-                
+                /*ClientHandler clientHandler = new ClientHandler(socket);
+
                 Thread thread = new Thread(clientHandler);
-                thread.start();
+                thread.start();*/
+                new Thread(new ClientHandler(socket)).start();
             }
+        } catch (Exception ex) {
+
         }
-        catch(Exception ex) {
-            
-        }
-    
+
     }
-    
+
     public void closeServerSocket() {
         try {
-            if(this.serverSocket != null) {
+            if (this.serverSocket != null) {
                 this.serverSocket.close();
             }
-        }
-        catch(IOException ex) {
+        } catch (IOException ex) {
             ex.printStackTrace();
         }
     }
-    
-    
+
 }

@@ -16,7 +16,6 @@ import java.net.ServerSocket;
 import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.swing.JFrame;
 import javax.swing.JPanel;
 
 /**
@@ -24,32 +23,33 @@ import javax.swing.JPanel;
  * @author andre
  */
 public class HomeServer extends javax.swing.JFrame {
-    
+
     public static ConnInterface conector;
     private ServerSocket socket;
     private JPanel panelCentral;
     public static Server server;
+
     /**
      * Creates new form HomeServer
      */
     public HomeServer() {
         this.conector = new Conector();
         File url = new File(".//Database//DBproject.db");
-        
-        if(!url.exists()) {   
+
+        if (!url.exists()) {
             this.conector.connect();
             DBCreation.createDB(conector);
-        }
-        else {
+        } else {
             this.conector.connect();
         }
-        
-        new Thread(new Runnable() {
+
+        /*new Thread(new Runnable() {
             public void run() {
                 initSocket();
-            } 
-        }).start();
-        
+            }
+        }).start();*/
+        initSocket();
+
         initComponents();
         this.bar.setVisible(false);
         this.panelCentral = central;
@@ -167,30 +167,29 @@ public class HomeServer extends javax.swing.JFrame {
         // TODO add your handling code here:
         String user = this.username.getText();
         String pass = this.password.getText();
-        
+
         QuerysSelect qs = new QuerysSelect();
         try {
             int id = qs.selectUser(user, pass);
             System.out.println(id);
-            if(id != 0) {
+            if (id != 0) {
                 this.container.removeAll();
                 this.container.repaint();
-                
+
                 this.username.setText("");
                 this.password.setText("");
                 JPanel panelView = new AdminMainView();
-                this.container.add(panelView,BorderLayout.CENTER);
+                this.container.add(panelView, BorderLayout.CENTER);
                 panelView.setVisible(true);
                 this.bar.setVisible(true);
                 pack();
-            }
-            else {
-                
+            } else {
+
             }
         } catch (SQLException ex) {
             Logger.getLogger(HomeServer.class.getName()).log(Level.SEVERE, null, ex);
         }
-        
+
     }//GEN-LAST:event_signInButtonActionPerformed
 
     private void homeButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_homeButtonActionPerformed
@@ -214,7 +213,7 @@ public class HomeServer extends javax.swing.JFrame {
         this.bar.setVisible(false);
         pack();
     }//GEN-LAST:event_signOffButtonActionPerformed
-    
+
     private void initSocket() {
         try {
             this.socket = new ServerSocket(6000);
@@ -223,11 +222,13 @@ public class HomeServer extends javax.swing.JFrame {
         } catch (IOException ex) {
             Logger.getLogger(HomeServer.class.getName()).log(Level.SEVERE, null, ex);
         }
-        
+
     }
+
     public JPanel getCentral() {
         return container;
     }
+
     /**
      * @param args the command line arguments
      */
@@ -235,7 +236,7 @@ public class HomeServer extends javax.swing.JFrame {
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
         /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
+         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html
          */
         try {
             for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
