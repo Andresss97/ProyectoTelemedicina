@@ -182,25 +182,25 @@ public class HomeClients extends javax.swing.JFrame {
         //Cogemos los datos
         String uName = this.username.getText();
         String pWord = this.password.getText();
-        MessageDigest md=null;
-        try 
+        //MessageDigest md=null;
+        /*try 
         {
-            md = MessageDigest.getInstance("SHA-512");
+            //md = MessageDigest.getInstance("SHA-512");
         } 
         catch (NoSuchAlgorithmException e) 
         {			
             e.printStackTrace();
-        }
-        md.update(pWord.getBytes());
-        byte [] pWordEncripted = md.digest();    
-        String passEncripted = new String(pWordEncripted);
+        }*/
+        //md.update(pWord.getBytes());
+        //byte [] pWordEncripted = md.digest();    
+        //String passEncripted = new String(pWordEncripted);
         try {
             //Conexión al servidor
             Socket socket = new Socket("localhost", 6000);
             client = new Client(socket);
             String[] data = new String[2];
             data[0] = uName;
-            data[1] = passEncripted;//Contraseña
+            data[1] = pWord;//passEncripted;//Contraseña
             //Envio de datos al server
             client.registerUser(data);
             client.listenForMessage();
@@ -226,6 +226,7 @@ public class HomeClients extends javax.swing.JFrame {
                 pack();
             }
         } catch (IOException ex) {
+            
             Logger.getLogger(HomeClients.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_signInButtonActionPerformed

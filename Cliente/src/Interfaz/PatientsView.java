@@ -67,13 +67,13 @@ public class PatientsView extends javax.swing.JPanel {
         rightPanelLayout.setVerticalGroup(
             rightPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, rightPanelLayout.createSequentialGroup()
-                .addContainerGap(52, Short.MAX_VALUE)
+                .addGap(40, 40, 40)
                 .addComponent(usernameLabel)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGap(18, 18, 18)
                 .addComponent(order, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGap(18, 18, 18)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(102, 102, 102))
+                .addContainerGap(125, Short.MAX_VALUE))
         );
 
         add(rightPanel, java.awt.BorderLayout.LINE_START);
@@ -86,32 +86,42 @@ public class PatientsView extends javax.swing.JPanel {
         scroll.setViewportView(listData);
 
         measureDataButton.setText("New measure");
+        measureDataButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                measureDataButtonActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout centralLayout = new javax.swing.GroupLayout(central);
         central.setLayout(centralLayout);
         centralLayout.setHorizontalGroup(
             centralLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(centralLayout.createSequentialGroup()
-                .addGap(101, 101, 101)
-                .addComponent(scroll, javax.swing.GroupLayout.PREFERRED_SIZE, 87, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(304, Short.MAX_VALUE))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, centralLayout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(measureDataButton)
-                .addGap(35, 35, 35))
+                .addGap(20, 20, 20))
+            .addGroup(centralLayout.createSequentialGroup()
+                .addGap(116, 116, 116)
+                .addComponent(scroll, javax.swing.GroupLayout.PREFERRED_SIZE, 87, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(213, Short.MAX_VALUE))
         );
         centralLayout.setVerticalGroup(
             centralLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, centralLayout.createSequentialGroup()
-                .addContainerGap(73, Short.MAX_VALUE)
+            .addGroup(centralLayout.createSequentialGroup()
+                .addGap(29, 29, 29)
                 .addComponent(measureDataButton)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGap(64, 64, 64)
                 .addComponent(scroll, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(101, 101, 101))
+                .addContainerGap(122, Short.MAX_VALUE))
         );
 
         add(central, java.awt.BorderLayout.CENTER);
     }// </editor-fold>//GEN-END:initComponents
+
+    private void measureDataButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_measureDataButtonActionPerformed
+        // TODO add your handling code here:
+        
+    }//GEN-LAST:event_measureDataButtonActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

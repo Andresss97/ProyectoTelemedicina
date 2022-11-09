@@ -105,7 +105,17 @@ public class ClientHandler implements Runnable{
                
                
             } catch (IOException ex) {
-                Logger.getLogger(ClientHandler.class.getName()).log(Level.SEVERE, null, ex);
+                try {
+                    this.socket.close();
+                    this.oos.close();
+                    this.ois.close();
+                    clients.remove(this);
+                    System.out.println("El cliente se desconecto");
+                    break;
+                } catch (IOException ex1) {
+                    Logger.getLogger(ClientHandler.class.getName()).log(Level.SEVERE, null, ex1);
+                }
+                
             } catch (ClassNotFoundException ex) {
                 Logger.getLogger(ClientHandler.class.getName()).log(Level.SEVERE, null, ex);
             } catch (SQLException ex) {
