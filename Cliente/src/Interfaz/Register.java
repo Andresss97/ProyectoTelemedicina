@@ -7,6 +7,8 @@ package Interfaz;
 import conexion.Client;
 import java.io.IOException;
 import java.net.Socket;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 import java.sql.Date;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -97,18 +99,29 @@ public class Register extends javax.swing.JPanel {
     private void registerButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_registerButtonActionPerformed
         String username = this.username.getText();
         String password = this.password.getText();
-        
+        MessageDigest md=null;
+        try 
+        {
+            md = MessageDigest.getInstance("SHA-512");
+        } 
+        catch (NoSuchAlgorithmException e) 
+        {			
+            e.printStackTrace();
+        }
+        md.update(password.getBytes());
+        byte [] pWordEncripted = md.digest();    
+        String passEncripted = new String(pWordEncripted);
         Patient patient = new Patient();
         patient.setUsername(username);
-        patient.setPassword(password);
+        patient.setPassword(passEncripted);
         patient.setAddress("aaa");
         patient.setDob(new Date(1,1,1));
         patient.setName(username);
         patient.setPhoneNumber(11111);
+        //TODO no esta repetido el username y el paciente?
         patient.setUsername(username);
         patient.setPassword(password);
-        patient.seteMail("aaaa");
-        
+        patient.seteMail("aaaa");        
         
         try {
             Socket socket = new Socket("loopback", 6000);

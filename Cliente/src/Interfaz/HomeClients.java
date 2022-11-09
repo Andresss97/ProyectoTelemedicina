@@ -185,11 +185,11 @@ public class HomeClients extends javax.swing.JFrame {
         MessageDigest md=null;
         try 
         {
-                md = MessageDigest.getInstance("SHA-512");
+            md = MessageDigest.getInstance("SHA-512");
         } 
         catch (NoSuchAlgorithmException e) 
         {			
-                e.printStackTrace();
+            e.printStackTrace();
         }
         md.update(pWord.getBytes());
         byte [] pWordEncripted = md.digest();    
