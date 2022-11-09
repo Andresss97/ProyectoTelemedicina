@@ -11,6 +11,8 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.IOException;
 import java.net.Socket;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.GroupLayout;
@@ -180,14 +182,25 @@ public class HomeClients extends javax.swing.JFrame {
         //Cogemos los datos
         String uName = this.username.getText();
         String pWord = this.password.getText();
-        
+        MessageDigest md=null;
+        try 
+        {
+                md = MessageDigest.getInstance("SHA-512");
+        } 
+        catch (NoSuchAlgorithmException e) 
+        {			
+                e.printStackTrace();
+        }
+        md.update(pWord.getBytes());
+        byte [] pWordEncripted = md.digest();    
+        String passEncripted = new String(pWordEncripted);
         try {
             //Conexión al servidor
             Socket socket = new Socket("localhost", 6000);
             client = new Client(socket);
             String[] data = new String[2];
             data[0] = uName;
-            data[1] = pWord;//Contraseña
+            data[1] = passEncripted;//Contraseña
             //Envio de datos al server
             client.registerUser(data);
             client.listenForMessage();
