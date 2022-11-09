@@ -57,33 +57,26 @@ public class Client {
     }
     
     public void listenForMessage() {
-        new Thread(new Runnable(){
-            @Override
-            public void run() {
-                while(socket.isConnected()) { 
-                    try {
-                        Object object = ois.readObject();
-                        System.out.println("Llego aqui con la info");
-                        if(object instanceof Patient) {
-                            System.out.println("El paciente llego");
-                            HomeClients.p = (Patient) object;
-                            HomeClients.patientsView = true;
-                        }
-                        else if(object instanceof Doctor) {
-                            System.out.println("El doctor llego llego");
-                            HomeClients.d = (Doctor) object;
-                            HomeClients.doctorsView = true;
-                        }
-                        else {
-                            
-                        }
-                    } catch (IOException ex) { 
-                        Logger.getLogger(Client.class.getName()).log(Level.SEVERE, null, ex);
-                    } catch (ClassNotFoundException ex) {
-                        Logger.getLogger(Client.class.getName()).log(Level.SEVERE, null, ex);
-                    }
+        System.out.println("Hola");
+        while (socket.isConnected()) {
+            try {
+                Object object = ois.readObject();
+                System.out.println("Llego aqui con la info");
+                if (object instanceof Patient) {
+                    System.out.println("El paciente llego");
+                    HomeClients.p = (Patient) object;
+                    HomeClients.patientsView = true;
+                    return;
+                } else if (object instanceof Doctor) {
+                    System.out.println("El doctor llego llego");
+                    HomeClients.d = (Doctor) object;
+                    HomeClients.doctorsView = true;
+                    return;
                 }
+
+            } catch (Exception ex) {
+                ex.printStackTrace();
             }
-        }).start();
+        }
     }
 }

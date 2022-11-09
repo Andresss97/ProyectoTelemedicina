@@ -188,6 +188,7 @@ public class HomeClients extends javax.swing.JFrame {
             data[1] = pWord;
             
             client.registerUser(data);
+            client.listenForMessage();
             
             if(patientsView == true) {
                 this.container.removeAll();
