@@ -6,7 +6,8 @@ package creation;
 
 import java.sql.SQLException;
 import java.sql.Statement;
-
+import java.time.format.DateTimeFormatter;
+import java.util.Date;
 /**
  *
  * @author andre
@@ -19,7 +20,7 @@ public abstract class DBCreation {
             QuerysInsert qi = new QuerysInsert();
             cTPatient(con);
             cTDoctor(con);
-            cTTreatment(con);
+            cTDailyRegister(con);
             cTMappingLogIn(con);
             
             try {
@@ -37,14 +38,23 @@ public abstract class DBCreation {
         
         try {
             st = conn.getConnect().createStatement();
-            in = "CREATE TABLE PATIENT (ID integer PRIMARY KEY AUTOINCREMENT NOT NULL,"
-                    + " USERNAME varchar(50) NOT NULL UNIQUE, PASSWORD varchar(50) NOT NULL)";
-            
+            in =  "CREATE TABLE IF NOT EXISTS PATIENT "
+                + "(ID          integer PRIMARY KEY AUTOINCREMENT NOT NULL,"
+                + "USERNAME     varchar(50) NOT NULL UNIQUE, "
+                + "PASSWORD     varchar(50) NOT NULL,"
+                + "NAME         varchar(50) NOT NULL,"
+                + "ADDRESS      varchar(50),"
+                + "DOB          date NOT NULL,"
+                + "PHONE        integer,"
+                + "EMAIL        varchar(50) NOT NULL,"
+                + "MHID         int CONSTRAINT rMedicalHistory REFERENCES MEDICALHISTORY (ID) ON UPDATE CASCADE ON DELETE SET NULL"
+                + ")";
+
             st.execute(in);
             st.close();
         }
         catch(Exception ex) {
-            ex.printStackTrace();
+            System.out.println("Error tabla pacientes");
         }
     }
     
@@ -55,8 +65,19 @@ public abstract class DBCreation {
         
         try {
             st = conn.getConnect().createStatement();
-            in = "CREATE TABLE DOCTOR (ID integer PRIMARY KEY AUTOINCREMENT NOT NULL,"
-                    + " USERNAME varchar(50) NOT NULL UNIQUE, PASSWORD  varchar(50) NOT NULL)";
+            in =  "CREATE TABLE IF NOT EXISTS DOCTOR "
+                + "(ID          integer PRIMARY KEY AUTOINCREMENT NOT NULL,"
+                + "USERNAME     varchar(50) NOT NULL UNIQUE, "
+                + "PASSWORD     varchar(50) NOT NULL,"
+                + "NAME         varchar(50) NOT NULL,"
+                + "ADDRESS      varchar(50),"
+                + "DOB          date,"
+                + "PHONE        integer NOT NULL,"
+                + "EMAIL        varchar(50) NOT NULL,"
+                + "SPECIALTY    varchar(50) NOT NULL,"
+                + "SALARY       double"
+                +")"; 
+              
             
             st.execute(in);
             st.close();
@@ -65,17 +86,68 @@ public abstract class DBCreation {
             System.out.println("Error tabla doctores");
         }
     }
-    
-    private static void cTTreatment(Conector con) {
+    private static void cTDailyRegister(Conector con) {
         Conector conn = con;
         Statement st = null;
         String in = null;
         
         try {
             st = conn.getConnect().createStatement();
-            in = "CREATE TABLE TREATMENT (ID integer PRIMARY KEY AUTOINCREMENT NOT NULL, "
-                    + "DATA varchar(50), DOB date NOT NULL, IDPATIENT int CONSTRAINT rPatient REFERENCES PATIENT "
-                    + "(ID) ON UPDATE CASCADE ON DELETE SET NULL, IDDOCTOR int CONSTRAINT rDoctor REFERENCES DOCTOR ON UPDATE CASCADE ON DELETE SET NULL)";
+            in =  "CREATE TABLE IF NOT EXISTS DAILYREGISTER"
+                + "(ID          integer PRIMARY KEY AUTOINCREMENT NOT NULL, "
+                + "DAY          date NOT NULL,"
+                + "SYMPTOMS     varchar(1024) NOT NULL,"
+                + "EMG          varchar(1024) NOT NULL,"
+                + "ECG          varchar(1024) NOT NULL,"
+                + "IDPATIENT    int CONSTRAINT rPatient REFERENCES PATIENT(ID) ON UPDATE CASCADE ON DELETE SET NULL"
+                + ")";
+                   
+            st.execute(in);
+            st.close();
+        }
+        catch(Exception ex) {
+            System.out.println("Error tabla registros diarios");
+        }
+    }
+    
+    private static void cTDoctorPatient(Conector con) {
+        Conector conn = con;
+        Statement st = null;
+        String in = null;
+        
+        try {
+            st = conn.getConnect().createStatement();
+            in =  "CREATE TABLE IF NOT EXISTS PATIENTDOCTOR"
+                + "(PATID       int CONSTRAINT rPatient REFERENCES PATIENT(ID) ON UPDATE CASCADE ON DELETE SET NULL,"
+                + " DOCID       int CONSTRAINT rDoctor REFERENCES DOCTOR(ID) ON UPDATE CASCADE ON DELETE SET NULL"
+                + ")";
+                   
+            st.execute(in);
+            st.close();
+        }
+        catch(Exception ex) {
+            System.out.println("Error tabla Pacientes-Doctores");
+        }
+    }
+    
+    private static void cTMedicalHistory(Conector con) {
+        Conector conn = con;
+        Statement st = null;
+        String in = null;
+        
+        try {
+            st = conn.getConnect().createStatement();
+            in =  "CREATE TABLE IF NOT EXISTS MEDICALHISTORY "
+                + "(ID          integer PRIMARY KEY AUTOINCREMENT NOT NULL, "
+                + "NAME         varchar(50) NOT NULL,"
+                + "DOB          date NOT NULL,"
+                + "DISEASES     varchar(1024),"
+                + "ALLERGIES    varchar(1024),"
+                + "SURGERIES    varchar(1024),"
+                + "WEIGHTKG     float NOT NULL,"
+                + "HEIGHTCM     integer NOT NULL,"
+                + ")";                    
+                   
             st.execute(in);
             st.close();
         }
@@ -91,9 +163,12 @@ public abstract class DBCreation {
 
         try {
             st = con.getConnect().createStatement();
-            in = "CREATE TABLE MAPPINGLOGIN" + "(ID integer PRIMARY KEY AUTOINCREMENT NOT NULL,"
-		+ "USERNAME varchar(50) UNIQUE," + "PASSWORD varchar (50) NOT NULL," + 
-                    "USERTYPE int NOT NULL)";
+            in =  "CREATE TABLE IF NOT EXISTS MAPPINGLOGIN"
+                + "(ID integer PRIMARY KEY AUTOINCREMENT NOT NULL,"
+                + "USERNAME varchar(50) UNIQUE," 
+                + "PASSWORD varchar (50) NOT NULL," 
+                + "USERTYPE int NOT NULL"
+                + ")";
             st.execute(in);
             st.close();
         } catch (Exception ex) {

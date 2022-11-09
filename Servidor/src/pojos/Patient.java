@@ -16,6 +16,7 @@ public class Patient implements Serializable {
 	private String  eMail;
 	private MedicalHistory medicalHistory;
 	private List<Doctor> doctors;
+        private List<DailyRegister> dailyRegisters;
 	private String username;
         private String password;
 
@@ -143,6 +144,15 @@ public class Patient implements Serializable {
 
 	public void setDoctors(List<Doctor> doctors) {
 		this.doctors = doctors;
+	}
+        
+        public List<DailyRegister> getDailyRegisters() {
+		return dailyRegisters;
+	}
+
+
+	public void setDailyRegisters(List<DailyRegister> dailyRegisters) {
+		this.dailyRegisters = dailyRegisters;
 	}
 
 
