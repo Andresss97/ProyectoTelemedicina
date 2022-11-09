@@ -5,11 +5,15 @@
 package creation;
 
 import Interfaz.HomeServer;
+import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import pojos.Doctor;
-import pojos.Patient;
+import pojos.*;
+import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
 
 /**
  *
@@ -47,33 +51,128 @@ public class QuerysSelect {
         return values;
     }
     
-    public Patient selectPatientByID(int id) throws SQLException {
+    public Patient selectPatientByID(int id){
         String query = "SELECT * from Patient where id = ?";
-        PreparedStatement st = conn.getConnect().prepareStatement(query);
-        ResultSet set = st.executeQuery();
-        
         Patient patient = new Patient();
-        patient.setUsername(set.getString("USERNAME"));
-        patient.setPassword(set.getString("PASSWORD"));
-        
-        st.close();
-        set.close();
-        
+        try
+        {
+            PreparedStatement st = conn.getConnect().prepareStatement(query);
+            st.setInt(1, id);
+            ResultSet set = st.executeQuery();        
+            
+            patient.setUsername(set.getString("USERNAME"));
+            patient.setPassword(set.getString("PASSWORD"));
+            patient.setName(set.getString("NAME"));
+            patient.setAddress(set.getString("ADDRESS"));
+            patient.setDob(set.getDate("DOB"));
+            patient.setPhoneNumber(set.getInt("PHONE"));
+            patient.seteMail(set.getString("EMAIL"));
+            st.close();
+            set.close();  
+        }
+        catch (SQLException e) 
+        {
+                e.printStackTrace();
+        }        
+              
         return patient;
     }
     
-        public Doctor selectDoctorByID(int id) throws SQLException {
+    public MedicalHistory getMedicalHistory(int id){
+        MedicalHistory mh = new MedicalHistory();
+        try
+        {
+            String query = "SELECT MHID from PATIENT where id = ?";
+            PreparedStatement st = conn.getConnect().prepareStatement(query);
+            st.setInt(1, id);
+            ResultSet set = st.executeQuery();        
+            Integer mhid = set.getInt("MHID");
+            st.close();
+            set.close(); 
+            String querymh = "SELECT * from MEDICALHISTORY where id = ?";
+            PreparedStatement ps = conn.getConnect().prepareStatement(querymh);
+            ps.setInt(1, mhid);
+            ResultSet result = ps.executeQuery(); 
+            mh.setName(set.getString("NAME"));
+            mh.setDOB(set.getDate("DOB"));
+            mh.setDiseases(result.getString("DISEASES"));
+            mh.setAllergies(result.getString("ALLERGIES"));
+            mh.setSurgeries(result.getString("SURGERIES"));
+            mh.setWeightKg(result.getFloat("WEIGHTKG"));
+            mh.setHeightCm(result.getInt("HEIGHTCM"));
+            ps.close();
+            result.close();  
+        }
+        catch (SQLException e) 
+        {
+                e.printStackTrace();
+        }                 
+        return mh;
+    }
+    
+    public ArrayList<DailyRegister> getDailyRegisters(int pid)throws SQLException {
+        ArrayList<DailyRegister> dr = new ArrayList<DailyRegister> ();
+        String query = "SELECT * from DAILYREGISTER where IDPATIENT = ?";
+        try
+        {
+            PreparedStatement st = conn.getConnect().prepareStatement(query);
+            st.setInt(1, pid);
+            ResultSet rs = st.executeQuery();
+            while(rs.next())
+            {
+                Integer id = rs.getInt("ID");
+                Date day = rs.getDate("DAY");
+                String symptoms = rs.getString("SYMPTOMS");
+                String EMG = rs.getString("EMG");
+                String ECG = rs.getString("ECG");
+                dr.add(new DailyRegister(id,day,symptoms,EMG,ECG));
+            }
+            st.close(); 
+        }
+        catch (SQLException e) 
+        {
+                e.printStackTrace();
+        }       
+        return dr;    
+    }
+    
+    
+    
+    public Doctor selectDoctorByID(int id)  {
         String query = "SELECT * from Patient where id = ?";
-        PreparedStatement st = conn.getConnect().prepareStatement(query);
-        ResultSet set = st.executeQuery();
-        
+        PreparedStatement st;
         Doctor doctor = new Doctor();
-        doctor.setUsername(set.getString("USERNAME"));
-        doctor.setPassword(set.getString("PASSWORD"));
+        try {
+            st = conn.getConnect().prepareStatement(query); 
+            ResultSet set = st.executeQuery();
+            doctor.setUsername(set.getString("USERNAME"));
+            doctor.setPassword(set.getString("PASSWORD"));
+            st.close();
+            set.close();
+        } 
         
-        st.close();
-        set.close();
-        
+        catch (SQLException e) 
+        {
+                e.printStackTrace();
+        }       
         return doctor;
+    }
+    public int getLastId() 
+    {
+        int id = 0;
+        try 
+        {
+            String query = "SELECT last_insert_rowid() AS lastId";
+            PreparedStatement p = conn.getConnect().prepareStatement(query);
+            ResultSet rs = p.executeQuery();
+            id = rs.getInt("lastId");
+            p.close();
+
+        }
+        catch (SQLException e) 
+        {
+                e.printStackTrace();
+        }
+        return id;
     }
 }
