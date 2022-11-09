@@ -177,16 +177,18 @@ public class HomeClients extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void signInButtonActionPerformed(ActionEvent evt) {//GEN-FIRST:event_signInButtonActionPerformed
+        //Cogemos los datos
         String uName = this.username.getText();
         String pWord = this.password.getText();
         
         try {
+            //Conexión al servidor
             Socket socket = new Socket("localhost", 6000);
             client = new Client(socket);
             String[] data = new String[2];
             data[0] = uName;
-            data[1] = pWord;
-            
+            data[1] = pWord;//Contraseña
+            //Envio de datos al server
             client.registerUser(data);
             client.listenForMessage();
             

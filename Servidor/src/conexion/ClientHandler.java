@@ -76,6 +76,7 @@ public class ClientHandler implements Runnable{
                    patient = (Patient) tmp;
                    this.patient = patient;
                    qi.insertUserType(patient.getUsername(), patient.getPassword(), 1);
+                   qi.insertPatientComplete(patient);
                }
                else if(tmp instanceof MeasuredData) {
                     System.out.println("I arrived safely");
@@ -95,11 +96,14 @@ public class ClientHandler implements Runnable{
                    }
                    else if(values[0] != 0 && values[1] == 2) {
                        this.patient = null;
-                       this.doctor = qs.selectDoctorByID(values[1]);
+                       
+                       this.doctor = qs.selectDoctorByUsername(data[0]);
                        System.out.println("Llego aqui doctor");
                        this.oos.writeObject(this.doctor);
                    }
                }
+               
+               
             } catch (IOException ex) {
                 Logger.getLogger(ClientHandler.class.getName()).log(Level.SEVERE, null, ex);
             } catch (ClassNotFoundException ex) {

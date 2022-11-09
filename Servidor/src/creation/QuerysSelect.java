@@ -139,7 +139,7 @@ public class QuerysSelect {
     
     
     public Doctor selectDoctorByID(int id)  {
-        String query = "SELECT * from Patient where id = ?";
+        String query = "SELECT * from Doctor where id = ?";
         PreparedStatement st;
         Doctor doctor = new Doctor();
         try {
@@ -174,5 +174,18 @@ public class QuerysSelect {
                 e.printStackTrace();
         }
         return id;
+    }
+    
+    public Doctor selectDoctorByUsername(String u) throws SQLException {
+        String query = "SELECT * FROM DOCTOR where USERNAME = ?";
+        PreparedStatement st = this.conn.getConnect().prepareStatement(query);
+        st.setString(1, u);
+        ResultSet rs = st.executeQuery();
+        Doctor doctor = new Doctor();
+        doctor.setUsername(rs.getString("username"));
+        doctor.setPassword(rs.getString("password"));
+        doctor.setId(rs.getInt("ID"));
+        
+        return doctor;
     }
 }

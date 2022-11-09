@@ -23,11 +23,7 @@ public abstract class DBCreation {
             cTDailyRegister(con);
             cTMappingLogIn(con);
             
-            try {
-                qi.insertAdmin("admin", "indi");
-            } catch (SQLException e) {
-                e.printStackTrace();
-            }
+            qi.insertAdmin("admin", "indi");
         }
     }
     

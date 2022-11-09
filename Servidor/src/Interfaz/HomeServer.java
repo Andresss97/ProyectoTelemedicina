@@ -43,12 +43,11 @@ public class HomeServer extends javax.swing.JFrame {
             this.conector.connect();
         }
 
-        /*new Thread(new Runnable() {
+        new Thread(new Runnable() {
             public void run() {
                 initSocket();
             }
-        }).start();*/
-        initSocket();
+        }).start();
 
         initComponents();
         this.bar.setVisible(false);

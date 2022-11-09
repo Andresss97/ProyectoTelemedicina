@@ -7,6 +7,7 @@ package Interfaz;
 import conexion.Client;
 import java.io.IOException;
 import java.net.Socket;
+import java.sql.Date;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JFrame;
@@ -100,6 +101,14 @@ public class Register extends javax.swing.JPanel {
         Patient patient = new Patient();
         patient.setUsername(username);
         patient.setPassword(password);
+        patient.setAddress("aaa");
+        patient.setDob(new Date(1,1,1));
+        patient.setName(username);
+        patient.setPhoneNumber(11111);
+        patient.setUsername(username);
+        patient.setPassword(password);
+        patient.seteMail("aaaa");
+        
         
         try {
             Socket socket = new Socket("loopback", 6000);

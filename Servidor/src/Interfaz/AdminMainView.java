@@ -6,10 +6,12 @@ package Interfaz;
 
 import creation.QuerysInsert;
 import java.awt.BorderLayout;
+import java.sql.Date;
 import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.*;
+import pojos.Doctor;
 
 /**
  *
@@ -208,11 +210,24 @@ public class AdminMainView extends javax.swing.JPanel {
         // TODO add your handling code here:
         QuerysInsert qi = new QuerysInsert();
         try {
-            qi.insertDoctor(this.username.getText(), this.password.getText());
+            Doctor doctor = new Doctor();
+            doctor.setAddress("aa");
+            doctor.setDob(new Date(1,1,1));
+            doctor.setName(this.username.getText());
+            doctor.setUsername(username.getText());
+            doctor.setPhoneNumber(11111);
+            doctor.setSalary(0.0);
+            doctor.setSpecialty("aa");
+            doctor.setSpeciality("aaa");
+            doctor.seteMail("aaa");
+            doctor.setPassword(this.password.getText());
+            
+            qi.insertDoctorComplete(doctor);
             qi.insertUserType(this.username.getText(), this.password.getText(),2);
             
             JOptionPane.showMessageDialog(this, "Doctor registered correctly", "Information", JOptionPane.INFORMATION_MESSAGE);
         } catch (SQLException ex) {
+            ex.printStackTrace();
             JOptionPane.showMessageDialog(this, "You have to use a different username", "Error", JOptionPane.ERROR_MESSAGE);
         }
        this.username.setText("");

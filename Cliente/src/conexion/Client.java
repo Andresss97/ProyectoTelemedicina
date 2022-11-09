@@ -57,7 +57,6 @@ public class Client {
     }
     
     public void listenForMessage() {
-        System.out.println("Hola");
         while (socket.isConnected()) {
             try {
                 Object object = ois.readObject();
