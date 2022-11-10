@@ -53,6 +53,7 @@ public class HomeServer extends javax.swing.JFrame {
         this.bar.setVisible(false);
         this.panelCentral = central;
         this.setTitle("Telemedicine - Server");
+        this.setLocationRelativeTo(null);
     }
 
     /**

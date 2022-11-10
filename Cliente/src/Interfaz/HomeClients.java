@@ -49,6 +49,7 @@ public class HomeClients extends javax.swing.JFrame {
     
     public HomeClients() {
         initComponents();
+        this.setLocationRelativeTo(null);
         this.setTitle("Telemedicine - Clients");
         this.bar.setVisible(false);
         this.doctorsView = false;
