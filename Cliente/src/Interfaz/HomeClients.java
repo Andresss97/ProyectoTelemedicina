@@ -17,10 +17,12 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.GroupLayout;
 import javax.swing.JButton;
+import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JPasswordField;
 import javax.swing.JTextField;
@@ -43,6 +45,7 @@ public class HomeClients extends javax.swing.JFrame {
     public static boolean patientsView;
     public static Patient p;
     public static Doctor d;
+    private JPanel frame;
     
     public HomeClients() {
         initComponents();
@@ -50,6 +53,7 @@ public class HomeClients extends javax.swing.JFrame {
         this.bar.setVisible(false);
         this.doctorsView = false;
         this.patientsView = false;
+        this.frame = central;
     }
 
     /**
@@ -208,7 +212,7 @@ public class HomeClients extends javax.swing.JFrame {
             if(patientsView == true) {
                 this.container.removeAll();
                 this.container.repaint();
-                
+                patientsView = true;
                 JPanel panel =  new PatientsView();
                 this.container.add(panel, BorderLayout.CENTER);
                 this.bar.setVisible(true);
@@ -218,13 +222,16 @@ public class HomeClients extends javax.swing.JFrame {
             else if(doctorsView == true) {
                 this.container.removeAll();
                 this.container.repaint();
-                
+                doctorsView = true;
                 JPanel panel =  new DoctorsView();
                 this.container.add(panel, BorderLayout.CENTER);
                 this.bar.setVisible(true);
                 panel.setVisible(true);
                 pack();
             }
+            
+            this.username.setText("");
+            this.password.setText("");
         } catch (IOException ex) {
             
             Logger.getLogger(HomeClients.class.getName()).log(Level.SEVERE, null, ex);
@@ -244,11 +251,57 @@ public class HomeClients extends javax.swing.JFrame {
 
     private void homeButtonActionPerformed(ActionEvent evt) {//GEN-FIRST:event_homeButtonActionPerformed
         // TODO add your handling code here:
+        this.container.removeAll();
+        this.container.repaint();
         
+        if(p == null) {
+            JPanel panel = new DoctorsView();
+            this.container.add(panel, BorderLayout.CENTER);
+            panel.setVisible(true);
+            pack();
+        }
+        else if(d == null) {
+            System.out.println("Llego aqui");
+            JPanel panel = new PatientsView();
+            this.container.add(panel, BorderLayout.CENTER);
+            panel.setVisible(true);
+            pack();
+        }
     }//GEN-LAST:event_homeButtonActionPerformed
 
     private void signOffButtonActionPerformed(ActionEvent evt) {//GEN-FIRST:event_signOffButtonActionPerformed
         // TODO add your handling code here:
+        this.container.removeAll();
+        this.container.repaint();
+        
+        if(patientsView == false) {
+            try {
+                client.closeResources();
+                d = null;
+                doctorsView = false;
+                JOptionPane.showMessageDialog(this, "Session is closed", "Information", JOptionPane.INFORMATION_MESSAGE);
+                this.container.add(this.frame, BorderLayout.CENTER);
+                this.bar.setVisible(false);
+                this.frame.setVisible(true);
+                pack(); 
+            } catch (IOException ex) {
+                JOptionPane.showMessageDialog(this, "Session is", "Information", JOptionPane.INFORMATION_MESSAGE);
+            }
+        }
+        else if(doctorsView == false) {
+            try {
+                client.closeResources();
+                p = null;
+                patientsView = false;
+                JOptionPane.showMessageDialog(this, "Session is closed", "Information", JOptionPane.INFORMATION_MESSAGE);
+                this.container.add(this.frame, BorderLayout.CENTER);
+                this.bar.setVisible(false);
+                this.frame.setVisible(true);
+                pack(); 
+            } catch (IOException ex) {
+                JOptionPane.showMessageDialog(this, "Session is", "Information", JOptionPane.INFORMATION_MESSAGE);
+            }
+        }
     }//GEN-LAST:event_signOffButtonActionPerformed
     
     public void setPatient() {

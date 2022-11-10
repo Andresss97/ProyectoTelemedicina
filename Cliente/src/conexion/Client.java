@@ -78,4 +78,10 @@ public class Client {
             }
         }
     }
+    
+    public void closeResources() throws IOException {
+        this.socket.close();
+        this.oos.close();
+        this.ois.close();
+    }
 }
