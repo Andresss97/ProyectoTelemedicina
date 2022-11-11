@@ -51,6 +51,7 @@ private static final long serialVersionUID = 1L;
 
 	public Patient() {
 		super();
+                this.dailyRegisters = new ArrayList();
 	}
 
 	public Patient(Integer id, String name)
@@ -192,8 +193,7 @@ private static final long serialVersionUID = 1L;
 
 	@Override
 	public String toString() {
-		return "Patient [ID=" + id + ",Name=" + name + ",Address=" + address + ",DOB=" + dob + ",Phone number="
-				+ phoneNumber + ",Email=" + eMail +"]";
+		return "Patient: " + this.getUsername();
 	}
 	
 	

@@ -12,7 +12,7 @@ public class DailyRegister implements Serializable
 	private String Symptoms;
 	private String EMG;
 	private String ECG;
-	
+	private Integer idPatient;
 	
 	
 	/*public DailyRegister(Integer ID, Date day, String symptoms, String EMG, String ECG)
@@ -27,11 +27,11 @@ public class DailyRegister implements Serializable
 	public DailyRegister(Integer ID, Date day, String symptoms, String EMG, String ECG)
 	{
 		super();
-		ID = ID;
-		Day = day;
-		Symptoms = symptoms;
-		EMG = EMG;
-		ECG = ECG;
+		this.ID = ID;
+		this.Day = day;
+		this.Symptoms = symptoms;
+		this.EMG = EMG;
+		this.ECG = ECG;
 	}
 
 
@@ -42,19 +42,19 @@ public class DailyRegister implements Serializable
 	}
 	
 	public Integer getID() 	{return ID;	}
-	public void setID(Integer iD) {	ID = iD;}
+	public void setID(Integer iD) {	this.ID = iD;}
 	
 	public Date getDay() {	return Day;	}
-	public void setDay (Date day) {	Day = day;	}
+	public void setDay (Date day) {	this.Day = day;	}
 	
 	public String getSymptoms() {	return Symptoms;}
-	public void setSymptoms(String symptoms) {Symptoms = symptoms;	}
+	public void setSymptoms(String symptoms) {this.Symptoms = symptoms;	}
 	
 	public String getEMG() {return EMG;	}
-	public void setEMG(String EMG) {EMG = EMG;	}
+	public void setEMG(String EMG) {this.EMG = EMG;	}
 	
 	public String getECG() {	return ECG;	}
-	public void setECG(String ECG) {ECG = ECG;	}
+	public void setECG(String ECG) {this.ECG = ECG;	}
 	
 
 	@Override
@@ -84,9 +84,16 @@ public class DailyRegister implements Serializable
 
 	@Override
 	public String toString() {
-		return "DailyRegister [ID=" + ID + ", Day=" + Day + ", Simptoms=" + this.Symptoms + ", EMG=" + EMG
-				+ ", ECG=" + ECG + "]";
+		return "DailyRegister ID = " + ID;
 	}
+
+    public Integer getIdPatient() {
+        return idPatient;
+    }
+
+    public void setIdPatient(Integer idPatient) {
+        this.idPatient = idPatient;
+    }
 	
 	
 	

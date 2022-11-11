@@ -15,6 +15,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import pojos.DailyRegister;
 import pojos.Doctor;
 import pojos.Patient;
 import server.MeasuredData;
@@ -78,17 +79,20 @@ public class ClientHandler implements Runnable{
                    qi.insertUserType(patient.getUsername(), patient.getPassword(), 1);
                    qi.insertPatientComplete(patient);
                }
-               else if(tmp instanceof MeasuredData) {
+               else if(tmp instanceof DailyRegister) {
                     System.out.println("I arrived safely");
-                    MeasuredData dataPatient = (MeasuredData) tmp;
+                    DailyRegister dataPatient = (DailyRegister) tmp;
                     System.out.println(dataPatient.toString());
+                    qi.insertData(dataPatient);
                }
                else if(tmp instanceof String[]){
                    String []data = (String[]) tmp;
+                   
                    int[] values = qs.selectUser2(data[0], data[1]);
                    
                    if(values[0] != 0 && values[1] == 1) {
                        this.patient = qs.selectPatientByID(values[1]);
+                       this.patient.setDailyRegisters(qs.getDailyRegisters(this.patient.getId()));
                        this.doctor = null;
                        System.out.println("Llego aqui paciente");
                        this.oos.writeObject(this.patient);
@@ -101,8 +105,13 @@ public class ClientHandler implements Runnable{
                        System.out.println("Llego aqui doctor");
                        this.oos.writeObject(this.doctor);
                    }
-               }
-               
+                   else if(tmp instanceof Integer){
+                       System.out.println("Pacientes pedidos");
+                       ArrayList<Patient> patients = qs.selectPatients();
+                       this.oos.writeObject(patients);
+                       return;
+                   }
+               }              
                
             } catch (IOException ex) {
                 try {

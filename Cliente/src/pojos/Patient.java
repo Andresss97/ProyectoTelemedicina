@@ -4,6 +4,8 @@ import java.io.Serializable;
 import java.sql.Date;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
+import java.util.TreeSet;
 
 public class Patient implements Serializable {
 
@@ -19,7 +21,6 @@ public class Patient implements Serializable {
 	private String username;
         private String password;
         private List<DailyRegister> dailyRegisters;
-
     public String getPassword() {
         return password;
     }
@@ -34,9 +35,8 @@ public class Patient implements Serializable {
 
     public void setUsername(String username) {
         this.username = username;
-    }
- 
-	
+    } 
+    
 	public Patient(Integer id, String name, String address, Date dob, Integer phoneNumber, String eMail, List<DailyRegister> dailyRegisters) {
 		super();
 		this.id = id;
@@ -51,6 +51,7 @@ public class Patient implements Serializable {
 
 	public Patient() {
 		super();
+                this.dailyRegisters = new ArrayList();
 	}
 
 	public Patient(Integer id, String name)
@@ -192,8 +193,7 @@ public class Patient implements Serializable {
 
 	@Override
 	public String toString() {
-		return "Patient [ID=" + id + ",Name=" + name + ",Address=" + address + ",DOB=" + dob + ",Phone number="
-				+ phoneNumber + ",Email=" + eMail +"]";
+		return "Patient: " + this.getUsername();
 	}
 	
 	

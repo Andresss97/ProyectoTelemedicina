@@ -67,6 +67,7 @@ public class QuerysSelect {
             patient.setDob(set.getDate("DOB"));
             patient.setPhoneNumber(set.getInt("PHONE"));
             patient.seteMail(set.getString("EMAIL"));
+            patient.setId(set.getInt("ID"));
             st.close();
             set.close();  
         }
@@ -187,5 +188,30 @@ public class QuerysSelect {
         doctor.setId(rs.getInt("ID"));
         
         return doctor;
+    }
+    
+    public ArrayList<Patient> selectPatients() throws SQLException {
+        String query =  "SELECT * from PATIENT";
+        ArrayList<Patient> patients = new ArrayList();
+        PreparedStatement st = this.conn.getConnect().prepareStatement(query);
+        ResultSet rs = st.executeQuery();
+        
+        while(rs.next()) {
+            Patient patient = new Patient();
+            patient.setUsername(rs.getString("USERNAME"));
+            patient.setPassword(rs.getString("PASSWORD"));
+            patient.setName(rs.getString("NAME"));
+            patient.setAddress(rs.getString("ADDRESS"));
+            patient.setDob(rs.getDate("DOB"));
+            patient.setPhoneNumber(rs.getInt("PHONE"));
+            patient.seteMail(rs.getString("EMAIL"));
+            patient.setId(rs.getInt("ID"));
+            
+            patients.add(patient);
+        }
+        st.close();
+        st.close();
+        
+        return patients;
     }
 }

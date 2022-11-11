@@ -32,7 +32,23 @@ public class QuerysInsert {
             e.printStackTrace();
         }
     }
-
+    
+    public void insertData(DailyRegister data) {
+        String query =  "INSERT into dailyRegister (day,symptoms,emg, ecg, idpatient) values (?,?,?,?,?)";
+                try {
+            PreparedStatement st = conn.getConnect().prepareStatement(query);
+            st.setDate(1, data.getDay());
+            st.setString(2, data.getSymptoms());
+            st.setString(3, data.getEMG());
+            st.setString(4, data.getECG());
+            st.setInt(5, data.getIdPatient());
+            st.executeUpdate();
+            st.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+    
     public void insertDoctorCredentials(String user, String password) {
         String query = "INSERT into doctor (username, password)"
                 + "     values (?,?)";
