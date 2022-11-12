@@ -4,34 +4,23 @@
  */
 package Interfaz;
 
-import java.awt.Dimension;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.sql.Date;
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.Vector;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.bluetooth.RemoteDevice;
+import javax.swing.DefaultListModel;
 import pojos.DailyRegister;
 import server.BITalino;
 import server.Client;
 import server.Frame;
-import java.time.LocalDate;
-import java.util.Iterator;
-import java.util.Set;
-import java.util.TreeSet;
-import javax.swing.DefaultListModel;
-import javax.swing.JFrame;
-import org.jfree.chart.ChartFactory;
-import org.jfree.chart.ChartFrame;
-import org.jfree.chart.ChartPanel;
-import org.jfree.chart.JFreeChart;
-import org.jfree.chart.plot.PlotOrientation;
-import org.jfree.data.category.DefaultCategoryDataset;
-import org.jfree.ui.RefineryUtilities;
+
 /**
  *
  * @author andre
@@ -41,8 +30,8 @@ public class PatientsView extends javax.swing.JPanel {
     /**
      * Creates new form PatientsView
      */
-    
     private final DefaultListModel modelo = new DefaultListModel();
+
     public PatientsView() {
         initComponents();
         this.usernameLabel.setText(HomeClients.p.getUsername());
@@ -132,8 +121,8 @@ public class PatientsView extends javax.swing.JPanel {
 
         add(central, java.awt.BorderLayout.CENTER);
     }// </editor-fold>//GEN-END:initComponents
-    
-    //Falta poner los sintomas 
+
+    //Falta poner los sintomas
     private void measureDataButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_measureDataButtonActionPerformed
         try {
             // TODO add your handling code here:
@@ -146,66 +135,81 @@ public class PatientsView extends javax.swing.JPanel {
             register.setECG(ecg);
             register.setEMG(emg);
             Date date = Date.valueOf(LocalDate.now());
-            
+
             register.setDay(date);
             register.setSymptoms("null");
             register.setIdPatient(HomeClients.p.getId());
-            
+
             HomeClients.client.registerData(register);
             Iterator<DailyRegister> it = (Iterator<DailyRegister>) HomeClients.p.getDailyRegisters();
-            
+
         } catch (Throwable ex) {
             Logger.getLogger(PatientsView.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_measureDataButtonActionPerformed
-    
-    //Aqwui estan los graficos
+
+    //Aqui estan los graficos
     private void listRegisterMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_listRegisterMouseClicked
         // TODO add your handling code here:
         System.out.println("Entro en el grafico");
         int value = this.listRegister.getMaxSelectionIndex();
         System.out.println(value);
         DailyRegister found = null;
-        
-        if(value == -1) {
+
+        if (value == -1) {
             return;
         }
-        
-        for(int i = 0; i <HomeClients.p.getDailyRegisters().size(); i++) {
-            if(i == value){
+
+        for (int i = 0; i < HomeClients.p.getDailyRegisters().size(); i++) {
+            if (i == value) {
                 found = HomeClients.p.getDailyRegisters().get(i);
 
                 break;
             }
         }
-     
-        JFreeChart lineChart1 = ChartFactory.createLineChart("EMG data", "Time","Data", this.createDatasetEMG(found),PlotOrientation.VERTICAL, true, true,true );
+        PlotData plotEMG = new PlotData("Register Results", this.createDatasetEMG(found), this.createDatasetEMG(found).size(), "EMG Results");
+        PlotData plotECG = new PlotData("Register Resulrs", this.createDatasetECG(found), this.createDatasetECG(found).size(), "ECG Results");
+        /*JFreeChart lineChart1 = ChartFactory.createLineChart("EMG data", "Time","Data", this.createDatasetEMG(found),PlotOrientation.VERTICAL, true, true,true );
         JFreeChart lineChart2 = ChartFactory.createLineChart("ECG data", "Time","Data", this.createDatasetECG(found),PlotOrientation.VERTICAL, true, true,true );
 
         ChartFrame frame1 = new ChartFrame("EMG", lineChart1);
         ChartFrame frame2 = new ChartFrame("ECG", lineChart2);
-        
+
         frame1.pack();
         frame2.pack();
-        
+
         frame1.setVisible(true);
-        frame2.setVisible(true);
+        frame2.setVisible(true);*/
     }//GEN-LAST:event_listRegisterMouseClicked
-    
-    private DefaultCategoryDataset createDatasetEMG(DailyRegister d){
+
+    /*private DefaultCategoryDataset createDatasetEMG(DailyRegister d){
         DefaultCategoryDataset dataset = new DefaultCategoryDataset();
         String[] separatedStrings = d.getEMG().replaceAll("\\[", "")
             .replaceAll("]", "").split(",");
         int[] data = new int[separatedStrings.length];
-        
+
         for(int i = 0; i < data.length; i++) {
             dataset.addValue(data[i],"EMG", String.valueOf(i));
         }
-        
+
+        return dataset;
+    }*/
+    //El dataset para la gráfica se crea en la clase PlotData
+    //Aquí pasa de String a ArrayList que es lo que recibe la clase PlotData
+    private ArrayList<Integer> createDatasetEMG(DailyRegister d) {
+        ArrayList<Integer> dataset = new ArrayList<Integer>();
+        String[] separatedStrings = d.getEMG().replaceAll("\\[", "")
+                .replaceAll("]", "").split(",");
+        int[] data = new int[separatedStrings.length];
+
+        for (int i = 0; i < data.length; i++) {
+            dataset.add(data[i]);
+        }
+
         return dataset;
     }
-    
-    private DefaultCategoryDataset createDatasetECG(DailyRegister d) {
+
+    /*private DefaultCategoryDataset createDatasetECG(DailyRegister d) {
         DefaultCategoryDataset dataset = new DefaultCategoryDataset();
         String[] separatedStrings = d.getECG().replaceAll("\\[", "")
                 .replaceAll("]", "").split(",");
@@ -216,8 +220,20 @@ public class PatientsView extends javax.swing.JPanel {
         }
 
         return dataset;
+    }*/
+    private ArrayList<Integer> createDatasetECG(DailyRegister d) {
+        ArrayList<Integer> dataset = new ArrayList<Integer>();
+        String[] separatedStrings = d.getECG().replaceAll("\\[", "")
+                .replaceAll("]", "").split(",");
+        int[] data = new int[separatedStrings.length];
+
+        for (int i = 0; i < data.length; i++) {
+            dataset.add(data[i]);
+        }
+
+        return dataset;
     }
-    
+
     public ArrayList<ArrayList<Integer>> readData() throws Throwable {
         Frame[] frame = null;
         BITalino bitalino = null;
@@ -234,7 +250,7 @@ public class PatientsView extends javax.swing.JPanel {
 
             //You need TO CHANGE THE MAC ADDRESS
             String macAddress = "98:D3:A1:FD:5C:27";
-            int SamplingRate = 10;
+            int SamplingRate = 100;
             bitalino.open(macAddress, SamplingRate);
 
             // start acquisition on analog channels A2 and A6
@@ -274,7 +290,7 @@ public class PatientsView extends javax.swing.JPanel {
         analogData.add(analogECGData);
         return analogData;
     }
-    
+
     public String select() {
         System.out.println("Read data? Y/N");
         BufferedReader reader = new BufferedReader(
@@ -287,10 +303,10 @@ public class PatientsView extends javax.swing.JPanel {
         }
         return confirm;
     }
-    
+
     public void inicializeList() {
         modelo.clear();
-        for(DailyRegister d : HomeClients.p.getDailyRegisters()) {
+        for (DailyRegister d : HomeClients.p.getDailyRegisters()) {
             modelo.addElement(d);
         }
     }
