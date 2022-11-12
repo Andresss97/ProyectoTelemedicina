@@ -55,6 +55,7 @@ public class HomeServer extends javax.swing.JFrame {
         this.bar.setVisible(false);
         this.panelCentral = central;
         this.setTitle("Telemedicine - Server");
+        this.setLocationRelativeTo(null);
     }
 
     /**
@@ -168,9 +169,8 @@ public class HomeServer extends javax.swing.JFrame {
         // TODO add your handling code here:
         String user = this.username.getText();
         String pass = this.password.getText();
-        //tenemos que desencriptar la contraseña
-        /*
-        MessageDigest md=null;
+        
+        /*MessageDigest md=null;
         try 
         {
             md = MessageDigest.getInstance("SHA-512");
@@ -181,13 +181,14 @@ public class HomeServer extends javax.swing.JFrame {
         }
         md.update(pass.getBytes());
         byte [] pWordEncripted = md.digest();    
-        String passEncripted = new String(pWordEncripted);
-        */
+        String passEncripted = new String(pWordEncripted);*/
+        
         QuerysSelect qs = new QuerysSelect();
         try {
-            int id = qs.selectUser(user, pass );
+            int id = qs.selectUser(user, pass);
+            int userType = 3;
             System.out.println(id);
-            if (id != 0) {
+            if (id != 0 && userType == 3) {
                 this.container.removeAll();
                 this.container.repaint();
 

@@ -21,6 +21,7 @@ public abstract class DBCreation {
             cTPatient(con);
             cTDoctor(con);
             cTDailyRegister(con);
+            cTDoctorPatient(con);
             cTMappingLogIn(con);
             
             qi.insertAdmin("admin", "indi");

@@ -4,16 +4,19 @@
  */
 package conexion;
 
+import Interfaz.DoctorsView;
 import Interfaz.HomeClients;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.Socket;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Vector;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.bluetooth.RemoteDevice;
+import pojos.DailyRegister;
 import pojos.Doctor;
 import pojos.Patient;
 import server.BITalino;
@@ -56,20 +59,33 @@ public class Client {
         }
     }
     
+    public void registerData(DailyRegister d) throws IOException {
+        this.oos.writeObject(d);
+    }
+    
+    public void requestPatients() throws IOException {
+        int i = 1;
+        this.oos.writeObject(i);
+    }
+    
     public void listenForMessage() {
         while (socket.isConnected()) {
             try {
                 Object object = ois.readObject();
-                System.out.println("Llego aqui con la info");
                 if (object instanceof Patient) {
-                    System.out.println("El paciente llego");
                     HomeClients.p = (Patient) object;
                     HomeClients.patientsView = true;
                     return;
                 } else if (object instanceof Doctor) {
-                    System.out.println("El doctor llego llego");
                     HomeClients.d = (Doctor) object;
                     HomeClients.doctorsView = true;
+                    return;
+                }
+                else {
+                    List<Patient> patients = (ArrayList<Patient>) object;
+                    DoctorsView.patients.addAll(patients);
+                    System.out.println("Pacientes han llegado");
+                    System.out.println(patients);
                     return;
                 }
 
@@ -77,5 +93,11 @@ public class Client {
                 ex.printStackTrace();
             }
         }
+    }
+    
+    public void closeResources() throws IOException {
+        this.socket.close();
+        this.oos.close();
+        this.ois.close();
     }
 }

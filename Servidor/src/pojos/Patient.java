@@ -7,7 +7,7 @@ import java.util.List;
 
 public class Patient implements Serializable {
 
-	private static final long serialVersionUID = 1L;
+private static final long serialVersionUID = 1L;
 	private Integer id;
 	private String  name;
 	private String  address;
@@ -16,17 +16,9 @@ public class Patient implements Serializable {
 	private String  eMail;
 	private MedicalHistory medicalHistory;
 	private List<Doctor> doctors;
-        private List<DailyRegister> dailyRegisters;
 	private String username;
         private String password;
-
-    public String getUsername() {
-        return username;
-    }
-
-    public void setUsername(String username) {
-        this.username = username;
-    }
+        private List<DailyRegister> dailyRegisters;
 
     public String getPassword() {
         return password;
@@ -35,10 +27,17 @@ public class Patient implements Serializable {
     public void setPassword(String password) {
         this.password = password;
     }
-        
+
+    public String getUsername() {
+        return username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
+    }
  
 	
-	public Patient(Integer id, String name, String address, Date dob, Integer phoneNumber, String eMail) {
+	public Patient(Integer id, String name, String address, Date dob, Integer phoneNumber, String eMail, List<DailyRegister> dailyRegisters) {
 		super();
 		this.id = id;
 		this.name = name;
@@ -46,12 +45,13 @@ public class Patient implements Serializable {
 		this.dob = dob;
 		this.phoneNumber = phoneNumber;
 		this.eMail = eMail;
-		
+                this.dailyRegisters = dailyRegisters;
 	}
 	
 
 	public Patient() {
 		super();
+                this.dailyRegisters = new ArrayList();
 	}
 
 	public Patient(Integer id, String name)
@@ -145,15 +145,6 @@ public class Patient implements Serializable {
 	public void setDoctors(List<Doctor> doctors) {
 		this.doctors = doctors;
 	}
-        
-        public List<DailyRegister> getDailyRegisters() {
-		return dailyRegisters;
-	}
-
-
-	public void setDailyRegisters(List<DailyRegister> dailyRegisters) {
-		this.dailyRegisters = dailyRegisters;
-	}
 
 
 	public String geteMail() {
@@ -173,7 +164,16 @@ public class Patient implements Serializable {
 		return result;
 	}
 
+    public List<DailyRegister> getDailyRegisters() {
+        return dailyRegisters;
+    }
 
+    public void setDailyRegisters(List<DailyRegister> dailyRegisters) {
+        this.dailyRegisters = dailyRegisters;
+    }
+
+        
+        
 	@Override
 	public boolean equals(Object obj) {
 		if (this == obj)
@@ -193,8 +193,7 @@ public class Patient implements Serializable {
 
 	@Override
 	public String toString() {
-		return "Patient [ID=" + id + ",Name=" + name + ",Address=" + address + ",DOB=" + dob + ",Phone number="
-				+ phoneNumber + ",Email=" + eMail +"]";
+		return "Patient: " + this.getUsername();
 	}
 	
 	

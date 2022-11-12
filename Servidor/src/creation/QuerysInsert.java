@@ -7,6 +7,8 @@ package creation;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import Interfaz.HomeServer;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 import pojos.*;
 
 /**
@@ -21,6 +23,19 @@ public class QuerysInsert {
 
     public void insertAdmin(String user, String password) {
         String query = "INSERT into mappinglogin (username, password,usertype) values (?,?,?)";
+        /*MessageDigest md=null;
+        try 
+        {
+            md = MessageDigest.getInstance("SHA-512");
+        } 
+        catch (NoSuchAlgorithmException e) 
+        {			
+            e.printStackTrace();
+        }
+        md.update(password.getBytes());
+        byte [] pWordEncripted = md.digest();    
+        String passEncripted = new String(pWordEncripted);*/
+        
         try {
             PreparedStatement st = conn.getConnect().prepareStatement(query);
             st.setString(1, user);
@@ -32,8 +47,23 @@ public class QuerysInsert {
             e.printStackTrace();
         }
     }
-
-    /*
+    
+    public void insertData(DailyRegister data) {
+        String query =  "INSERT into dailyRegister (day,symptoms,emg, ecg, idpatient) values (?,?,?,?,?)";
+                try {
+            PreparedStatement st = conn.getConnect().prepareStatement(query);
+            st.setDate(1, data.getDay());
+            st.setString(2, data.getSymptoms());
+            st.setString(3, data.getEMG());
+            st.setString(4, data.getECG());
+            st.setInt(5, data.getIdPatient());
+            st.executeUpdate();
+            st.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+    
     public void insertDoctorCredentials(String user, String password) {
         String query = "INSERT into doctor (username, password)"
                 + "     values (?,?)";
@@ -48,7 +78,7 @@ public class QuerysInsert {
         }
 
     }
-*/
+
     public void insertDoctor(String username, String password) {
         String query = "INSERT into DOCTOR (username, password) values(?,?)";
         try {

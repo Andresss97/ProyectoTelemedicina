@@ -4,6 +4,13 @@
  */
 package Interfaz;
 
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.DefaultListModel;
+import pojos.Patient;
+
 /**
  *
  * @author andre
@@ -13,9 +20,16 @@ public class DoctorsView extends javax.swing.JPanel {
     /**
      * Creates new form DoctorsView
      */
+    public static ArrayList<Patient> patients;
+    private final DefaultListModel modelo = new DefaultListModel();
+    
     public DoctorsView() {
         initComponents();
         this.doctorsUsernameLabel.setText("Doctor: " + HomeClients.d.getUsername());
+        this.listPatients.setModel(modelo);
+        this.listRegisters.setVisible(false);
+        this.scroll2.setVisible(false);
+        this.inicializePatients();
     }
 
     /**
@@ -28,7 +42,6 @@ public class DoctorsView extends javax.swing.JPanel {
     private void initComponents() {
 
         panelRight = new javax.swing.JPanel();
-        order = new javax.swing.JComboBox();
         scroll = new javax.swing.JScrollPane();
         listPatients = new javax.swing.JList();
         doctorsUsernameLabel = new javax.swing.JLabel();
@@ -37,8 +50,6 @@ public class DoctorsView extends javax.swing.JPanel {
         listRegisters = new javax.swing.JList();
 
         setLayout(new java.awt.BorderLayout());
-
-        order.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
 
         listPatients.setModel(new javax.swing.AbstractListModel<String>() {
             String[] strings = { "Item 1", "Item 2", "Item 3", "Item 4", "Item 5" };
@@ -56,9 +67,10 @@ public class DoctorsView extends javax.swing.JPanel {
             .addGroup(panelRightLayout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(panelRightLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(scroll, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
-                    .addComponent(order, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(doctorsUsernameLabel, javax.swing.GroupLayout.DEFAULT_SIZE, 88, Short.MAX_VALUE))
+                    .addComponent(doctorsUsernameLabel, javax.swing.GroupLayout.DEFAULT_SIZE, 133, Short.MAX_VALUE)
+                    .addGroup(panelRightLayout.createSequentialGroup()
+                        .addComponent(scroll, javax.swing.GroupLayout.PREFERRED_SIZE, 114, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
         );
         panelRightLayout.setVerticalGroup(
@@ -66,11 +78,9 @@ public class DoctorsView extends javax.swing.JPanel {
             .addGroup(panelRightLayout.createSequentialGroup()
                 .addGap(36, 36, 36)
                 .addComponent(doctorsUsernameLabel)
-                .addGap(18, 18, 18)
-                .addComponent(order, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(scroll, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(134, Short.MAX_VALUE))
+                .addGap(29, 29, 29)
+                .addComponent(scroll, javax.swing.GroupLayout.PREFERRED_SIZE, 203, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(86, Short.MAX_VALUE))
         );
 
         add(panelRight, java.awt.BorderLayout.LINE_START);
@@ -88,27 +98,41 @@ public class DoctorsView extends javax.swing.JPanel {
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGap(85, 85, 85)
-                .addComponent(scroll2, javax.swing.GroupLayout.PREFERRED_SIZE, 84, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(232, Short.MAX_VALUE))
+                .addComponent(scroll2, javax.swing.GroupLayout.PREFERRED_SIZE, 103, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(168, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(107, 107, 107)
-                .addComponent(scroll2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(129, Short.MAX_VALUE))
+                .addGap(82, 82, 82)
+                .addComponent(scroll2, javax.swing.GroupLayout.PREFERRED_SIZE, 203, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(85, Short.MAX_VALUE))
         );
 
         add(jPanel1, java.awt.BorderLayout.CENTER);
     }// </editor-fold>//GEN-END:initComponents
 
-
+    
+    private void inicializePatients() {
+        try {
+            HomeClients.client.requestPatients();
+            HomeClients.client.listenForMessage();
+            
+            this.modelo.clear();
+            for(Patient p: patients) {
+                this.modelo.addElement(p);
+            }
+            
+        } catch (IOException ex) {
+            Logger.getLogger(DoctorsView.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+    }
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel doctorsUsernameLabel;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JList<String> listPatients;
     private javax.swing.JList<String> listRegisters;
-    private javax.swing.JComboBox<String> order;
     private javax.swing.JPanel panelRight;
     private javax.swing.JScrollPane scroll;
     private javax.swing.JScrollPane scroll2;

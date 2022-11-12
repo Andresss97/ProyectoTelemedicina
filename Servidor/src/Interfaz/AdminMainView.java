@@ -4,6 +4,7 @@
  */
 package Interfaz;
 
+import conexion.ClientHandler;
 import creation.QuerysInsert;
 import creation.QuerysSelect;
 import java.awt.BorderLayout;
@@ -25,7 +26,10 @@ public class AdminMainView extends javax.swing.JPanel {
     /**
      * Creates new form AdminMainView
      */
-
+    
+    private int doctors;
+    private int patients;
+    
     public AdminMainView() {
        initComponents();
        this.openSocketButton.setEnabled(false);
@@ -34,7 +38,7 @@ public class AdminMainView extends javax.swing.JPanel {
        this.username.setVisible(false);
        this.password.setVisible(false);
        this.buttonRegister.setVisible(false);
-       
+       this.refresh();
     }
 
     /**
@@ -140,6 +144,11 @@ public class AdminMainView extends javax.swing.JPanel {
         add(container, java.awt.BorderLayout.CENTER);
 
         refreshButton.setText("Refresh");
+        refreshButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                refreshButtonActionPerformed(evt);
+            }
+        });
 
         createDoctorButton.setText("Create Doctor");
         createDoctorButton.addActionListener(new java.awt.event.ActionListener() {
@@ -242,6 +251,25 @@ public class AdminMainView extends javax.swing.JPanel {
        this.password.setVisible(false);
        this.buttonRegister.setVisible(false);
     }//GEN-LAST:event_buttonRegisterActionPerformed
+
+    private void refresh() {
+        for(ClientHandler i: ClientHandler.clients) {
+            if(i.getDoctor() == null) {
+                this.patients++;
+            }
+            else if(i.getPatient() == null) {
+                this.doctors++;
+            }
+        }
+        
+        this.patientsLabel.setText("Patients connected " + this.patients);
+        this.doctorsLabel.setText("Doctors connected " + this.doctors);
+    }
+    
+    private void refreshButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_refreshButtonActionPerformed
+        // TODO add your handling code here:
+        this.refresh();
+    }//GEN-LAST:event_refreshButtonActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

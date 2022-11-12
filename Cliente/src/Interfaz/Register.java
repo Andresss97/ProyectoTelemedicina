@@ -99,8 +99,7 @@ public class Register extends javax.swing.JPanel {
     private void registerButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_registerButtonActionPerformed
         String username = this.username.getText();
         String password = this.password.getText();
-        /*
-        MessageDigest md=null;
+        /*MessageDigest md=null;
         try 
         {
             md = MessageDigest.getInstance("SHA-512");
@@ -111,8 +110,7 @@ public class Register extends javax.swing.JPanel {
         }
         md.update(password.getBytes());
         byte [] pWordEncripted = md.digest();    
-        String passEncripted = new String(pWordEncripted);
-*/
+        String passEncripted = new String(pWordEncripted);*/
         Patient patient = new Patient();
         patient.setUsername(username);
         patient.setPassword(password);
@@ -120,9 +118,6 @@ public class Register extends javax.swing.JPanel {
         patient.setDob(new Date(1,1,1));
         patient.setName(username);
         patient.setPhoneNumber(11111);
-        //TODO no esta repetido el username y el paciente?
-        patient.setUsername(username);
-        patient.setPassword(password);
         patient.seteMail("aaaa");        
         
         try {
