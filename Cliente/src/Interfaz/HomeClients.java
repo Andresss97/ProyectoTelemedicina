@@ -182,6 +182,7 @@ public class HomeClients extends javax.swing.JFrame {
         //Cogemos los datos
         String uName = this.username.getText();
         String pWord = this.password.getText();
+        /*
         MessageDigest md=null;
         try 
         {
@@ -194,13 +195,14 @@ public class HomeClients extends javax.swing.JFrame {
         md.update(pWord.getBytes());
         byte [] pWordEncripted = md.digest();    
         String passEncripted = new String(pWordEncripted);
+        */
         try {
             //Conexión al servidor
             Socket socket = new Socket("localhost", 6000);
             client = new Client(socket);
             String[] data = new String[2];
             data[0] = uName;
-            data[1] = passEncripted;//Contraseña
+            data[1] = pWord;//Contraseña
             //Envio de datos al server
             client.registerUser(data);
             client.listenForMessage();

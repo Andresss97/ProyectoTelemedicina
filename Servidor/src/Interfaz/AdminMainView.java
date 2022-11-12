@@ -5,13 +5,16 @@
 package Interfaz;
 
 import creation.QuerysInsert;
+import creation.QuerysSelect;
 import java.awt.BorderLayout;
 import java.sql.Date;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.*;
 import pojos.Doctor;
+import pojos.Patient;
 
 /**
  *
@@ -209,6 +212,7 @@ public class AdminMainView extends javax.swing.JPanel {
     private void buttonRegisterActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonRegisterActionPerformed
         // TODO add your handling code here:
         QuerysInsert qi = new QuerysInsert();
+        QuerysSelect qs = new QuerysSelect();
         try {
             Doctor doctor = new Doctor();
             doctor.setAddress("aa");
@@ -221,7 +225,6 @@ public class AdminMainView extends javax.swing.JPanel {
             doctor.setSpeciality("aaa");
             doctor.seteMail("aaa");
             doctor.setPassword(this.password.getText());
-            
             qi.insertDoctorComplete(doctor);
             qi.insertUserType(this.username.getText(), this.password.getText(),2);
             

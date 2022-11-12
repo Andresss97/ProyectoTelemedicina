@@ -2,6 +2,7 @@ package pojos;
 
 import java.io.Serializable;
 import java.sql.Date;
+import java.util.ArrayList;
 import java.util.List;
 
 
@@ -19,6 +20,7 @@ public class Doctor implements Serializable{
 	private Double salary;
         private String username;
         private String password;
+        private ArrayList<Patient> patients;
         
 	public Doctor() {
 		super();
@@ -47,10 +49,17 @@ public class Doctor implements Serializable{
     public void setPassword(String password) {
         this.password = password;
     }
-        
+    
+    public ArrayList <Patient> getPatients() {
+        return patients;
+    }
+
+    public void setPatients(ArrayList <Patient> p) {
+        this.patients = p;
+    }
         
 	public Doctor(Integer id, String name, String address, Date dob, Integer phoneNumber, String eMail,
-			String speciality, Double salary) {
+			String speciality, Double salary, ArrayList <Patient> patients) {
 		super();
 		this.id = id;
 		this.name = name;
@@ -60,6 +69,7 @@ public class Doctor implements Serializable{
 		this.eMail = eMail;
 		this.specialty = speciality;
 		this.salary = salary;
+                this.patients = patients;
 	}
 	public Doctor(Integer id, String name, Integer phoneNumber, String eMail, String speciality) {
 		super();
@@ -87,7 +97,8 @@ public class Doctor implements Serializable{
 		this.name = name;
 		this.eMail = eMail;
 	}
-
+        
+        
 
 
 	@Override

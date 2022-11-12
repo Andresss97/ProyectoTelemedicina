@@ -169,6 +169,7 @@ public class HomeServer extends javax.swing.JFrame {
         String user = this.username.getText();
         String pass = this.password.getText();
         //tenemos que desencriptar la contraseña
+        /*
         MessageDigest md=null;
         try 
         {
@@ -181,9 +182,10 @@ public class HomeServer extends javax.swing.JFrame {
         md.update(pass.getBytes());
         byte [] pWordEncripted = md.digest();    
         String passEncripted = new String(pWordEncripted);
+        */
         QuerysSelect qs = new QuerysSelect();
         try {
-            int id = qs.selectUser(user, passEncripted);
+            int id = qs.selectUser(user, pass );
             System.out.println(id);
             if (id != 0) {
                 this.container.removeAll();

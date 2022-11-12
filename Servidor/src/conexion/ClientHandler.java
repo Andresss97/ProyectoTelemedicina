@@ -98,6 +98,8 @@ public class ClientHandler implements Runnable{
                        this.patient = null;
                        
                        this.doctor = qs.selectDoctorByUsername(data[0]);
+                       ArrayList <Patient> p = qs.selectPatients();
+                       this.doctor.setPatients(p);
                        System.out.println("Llego aqui doctor");
                        this.oos.writeObject(this.doctor);
                    }

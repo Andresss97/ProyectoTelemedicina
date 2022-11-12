@@ -78,6 +78,37 @@ public class QuerysSelect {
         return patient;
     }
     
+    public ArrayList <Patient> selectPatients(){
+        String query = "SELECT * from Patient";
+        Patient patient = new Patient();
+        ArrayList <Patient> patientList = null;
+        try
+        {
+            PreparedStatement st = conn.getConnect().prepareStatement(query);
+            ResultSet set = st.executeQuery();  
+            while(set.next())
+            {
+                patient.setUsername(set.getString("USERNAME"));
+                patient.setPassword(set.getString("PASSWORD"));
+                patient.setName(set.getString("NAME"));
+                patient.setAddress(set.getString("ADDRESS"));
+                patient.setDob(set.getDate("DOB"));
+                patient.setPhoneNumber(set.getInt("PHONE"));
+                patient.seteMail(set.getString("EMAIL"));
+                patientList.add(patient);
+            }
+            st.close();
+            set.close();  
+        }
+        catch (SQLException e) 
+        {
+                e.printStackTrace();
+        }        
+              
+        return patientList;
+    }
+    
+    
     public MedicalHistory getMedicalHistory(int id){
         MedicalHistory mh = new MedicalHistory();
         try
