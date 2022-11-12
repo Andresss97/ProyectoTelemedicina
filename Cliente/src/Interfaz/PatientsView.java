@@ -132,7 +132,8 @@ public class PatientsView extends javax.swing.JPanel {
 
         add(central, java.awt.BorderLayout.CENTER);
     }// </editor-fold>//GEN-END:initComponents
-
+    
+    //Falta poner los sintomas 
     private void measureDataButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_measureDataButtonActionPerformed
         try {
             // TODO add your handling code here:
@@ -157,13 +158,18 @@ public class PatientsView extends javax.swing.JPanel {
             Logger.getLogger(PatientsView.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_measureDataButtonActionPerformed
-
+    
+    //Aqwui estan los graficos
     private void listRegisterMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_listRegisterMouseClicked
         // TODO add your handling code here:
         System.out.println("Entro en el grafico");
         int value = this.listRegister.getMaxSelectionIndex();
         System.out.println(value);
         DailyRegister found = null;
+        
+        if(value == -1) {
+            return;
+        }
         
         for(int i = 0; i <HomeClients.p.getDailyRegisters().size(); i++) {
             if(i == value){

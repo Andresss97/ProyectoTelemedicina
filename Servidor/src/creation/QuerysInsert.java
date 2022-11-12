@@ -7,6 +7,8 @@ package creation;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import Interfaz.HomeServer;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 import pojos.*;
 
 /**
@@ -21,6 +23,19 @@ public class QuerysInsert {
 
     public void insertAdmin(String user, String password) {
         String query = "INSERT into mappinglogin (username, password,usertype) values (?,?,?)";
+        /*MessageDigest md=null;
+        try 
+        {
+            md = MessageDigest.getInstance("SHA-512");
+        } 
+        catch (NoSuchAlgorithmException e) 
+        {			
+            e.printStackTrace();
+        }
+        md.update(password.getBytes());
+        byte [] pWordEncripted = md.digest();    
+        String passEncripted = new String(pWordEncripted);*/
+        
         try {
             PreparedStatement st = conn.getConnect().prepareStatement(query);
             st.setString(1, user);

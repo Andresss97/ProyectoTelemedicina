@@ -250,7 +250,7 @@ public class AdminMainView extends javax.swing.JPanel {
     }//GEN-LAST:event_buttonRegisterActionPerformed
 
     private void refresh() {
-                for(ClientHandler i: ClientHandler.clients) {
+        for(ClientHandler i: ClientHandler.clients) {
             if(i.getDoctor() == null) {
                 this.patients++;
             }
@@ -259,7 +259,7 @@ public class AdminMainView extends javax.swing.JPanel {
             }
         }
         
-        this.patientsLabel.setText("Patients connected " + this.patients );
+        this.patientsLabel.setText("Patients connected " + this.patients);
         this.doctorsLabel.setText("Doctors connected " + this.doctors);
     }
     

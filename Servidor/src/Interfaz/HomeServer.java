@@ -13,6 +13,8 @@ import java.awt.BorderLayout;
 import java.io.File;
 import java.io.IOException;
 import java.net.ServerSocket;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -167,12 +169,26 @@ public class HomeServer extends javax.swing.JFrame {
         // TODO add your handling code here:
         String user = this.username.getText();
         String pass = this.password.getText();
-
+        
+        /*MessageDigest md=null;
+        try 
+        {
+            md = MessageDigest.getInstance("SHA-512");
+        } 
+        catch (NoSuchAlgorithmException e) 
+        {			
+            e.printStackTrace();
+        }
+        md.update(pass.getBytes());
+        byte [] pWordEncripted = md.digest();    
+        String passEncripted = new String(pWordEncripted);*/
+        
         QuerysSelect qs = new QuerysSelect();
         try {
             int id = qs.selectUser(user, pass);
+            int userType = 3;
             System.out.println(id);
-            if (id != 0) {
+            if (id != 0 && userType == 3) {
                 this.container.removeAll();
                 this.container.repaint();
 

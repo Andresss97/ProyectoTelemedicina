@@ -82,10 +82,11 @@ public class Client {
                     return;
                 }
                 else {
-                    ArrayList<Patient> patients = (ArrayList<Patient>) object;
+                    List<Patient> patients = (ArrayList<Patient>) object;
                     DoctorsView.patients.addAll(patients);
                     System.out.println("Pacientes han llegado");
                     System.out.println(patients);
+                    return;
                 }
 
             } catch (Exception ex) {
