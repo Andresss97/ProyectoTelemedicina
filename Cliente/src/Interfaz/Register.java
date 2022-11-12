@@ -99,6 +99,7 @@ public class Register extends javax.swing.JPanel {
     private void registerButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_registerButtonActionPerformed
         String username = this.username.getText();
         String password = this.password.getText();
+        /*
         MessageDigest md=null;
         try 
         {
@@ -111,9 +112,10 @@ public class Register extends javax.swing.JPanel {
         md.update(password.getBytes());
         byte [] pWordEncripted = md.digest();    
         String passEncripted = new String(pWordEncripted);
+*/
         Patient patient = new Patient();
         patient.setUsername(username);
-        patient.setPassword(passEncripted);
+        patient.setPassword(password);
         patient.setAddress("aaa");
         patient.setDob(new Date(1,1,1));
         patient.setName(username);

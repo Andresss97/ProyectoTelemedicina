@@ -27,6 +27,7 @@ public class MeasuredData implements Serializable{
         this.EMGData = EMGData;
         this.ECGData = ECGData;
     }
+    //TODO, MOVER ESTO A POJOS?
 
     @Override
     public String toString() {

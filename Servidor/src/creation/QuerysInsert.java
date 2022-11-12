@@ -33,6 +33,7 @@ public class QuerysInsert {
         }
     }
 
+    /*
     public void insertDoctorCredentials(String user, String password) {
         String query = "INSERT into doctor (username, password)"
                 + "     values (?,?)";
@@ -47,7 +48,7 @@ public class QuerysInsert {
         }
 
     }
-
+*/
     public void insertDoctor(String username, String password) {
         String query = "INSERT into DOCTOR (username, password) values(?,?)";
         try {
